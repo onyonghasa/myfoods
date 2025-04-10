@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft Food Recipe Manager</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+
+        .menu-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .menu-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .menu-image {
+            height: 200px;
+            background-color: #4CAF50;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2em;
+        }
+
+        .menu-content {
+            padding: 20px;
+        }
+
+        .menu-title {
+            margin: 0 0 10px 0;
+            color: #4CAF50;
+        }
+
+        .menu-description {
+            margin: 0 0 15px 0;
+            color: #666;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+
+        .instructions {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+        }
+
+        .plugin-commands {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        .command-block {
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-family: monospace;
+        }
+        .project-info {
+            background-color: #f4f7fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: 'Arial', sans-serif;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .project-info h3 {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .project-info p {
+            font-size: 16px;
+            color: #34495e;
+            line-height: 1.6;
+            text-align: justify;
+            margin-bottom: 15px;
+        }
+
+        .project-info p:last-child {
+            margin-bottom: 0;
+        }
+
+        .project-info:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .project-info p em {
+            font-style: italic;
+            color: #e67e22;
+        }
+
+            @media (max-width: 768px) {
+                .menu-container {
+                    flex-direction: column;
+                    align-items: center;
+                }
+
+                .menu-card {
+                    width: 90%;
+                }
+            }
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Minecraft Food Recipe Manager</h1>
+            <p>เครื่องมือจัดการสูตรอาหาร Myfoods Plugin Minecraft 1.21.4</p>
+        </header>
+
+        <div class="menu-container">
+            <div class="menu-card">
+                <div class="menu-image">📝</div>
+                <div class="menu-content">
+                    <h2 class="menu-title">Recipe Management</h2>
+                    <p class="menu-description">ระบบจัดการสูตรอาหาร Minecraft สำหรับผู้ดูแลระบบ</p>
+                    <a href="indexdev.html" class="btn">เปิดตัวจัดการ</a>
+                </div>
+            </div>
+
+            <div class="menu-card">
+                <div class="menu-image">👀</div>
+                <div class="menu-content">
+                    <h2 class="menu-title">Recipe Preview</h2>
+                    <p class="menu-description">ตัวอย่างแสดงผลสูตรอาหารสำหรับผู้เล่น</p>
+                    <a href="indexlitepreview.html" class="btn">เปิดตัวอย่าง</a>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="instructions">
+            <h2>Usage Instructions</h2>
+            <h3>For Administrators:</h3>
+            <ol>
+                <li>Use the "Recipe Management" menu to add/edit/delete food recipes.</li>
+                <li>Fill out the food information form completely.</li>
+                <li>Define the crafting recipe and required ingredients.</li>
+                <li>Click "Update file datafoods.json" to save the changes.</li>
+                <li>Upload the datafoods.json file to your server.</li>
+                <li>You can place the file <strong>indexlitepreview.html</strong> on your host along with the
+                    <strong>datafoods.json</strong> file so players can view the food list.</li>
+            </ol>
+
+            <h3>For Players:</h3>
+            <ol>
+                <li>Use the "Recipe Preview" menu to view all food recipes.</li>
+                <li>Click on a food item to see details and the crafting recipe.</li>
+            </ol>
+        </div>
+
+        <div class="instructions">
+            <h2>คำแนะนำการใช้งาน</h2>
+            <h3>สำหรับผู้ดูแลระบบ:</h3>
+            <ol>
+                <li>ใช้เมนู "Recipe Management" เพื่อเพิ่ม/แก้ไข/ลบ สูตรอาหาร</li>
+                <li>กรอกข้อมูลอาหารในฟอร์มให้ครบถ้วน</li>
+                <li>กำหนดสูตรคราฟต์และวัตถุดิบที่ต้องการ</li>
+                <li>คลิก "Update file datafoods.json" เพื่อบันทึกการเปลี่ยนแปลง</li>
+                <li>อัพโหลดไฟล์ datafoods.json ไปยังเซิร์ฟเวอร์ของคุณ</li>
+                <li>คุณสามารถนำไฟล์ <strong>indexlitepreview.html</strong> ไปแปะที่โฮสของคุณพร้อมกับไฟล์
+                    <strong>datafoods.json</strong> เพื่อให้ผู้เล่นดูรายการอาหารได้</li>
+            </ol>
+
+            <h3>สำหรับผู้เล่น:</h3>
+            <ol>
+                <li>ใช้เมนู "Recipe Preview" เพื่อดูสูตรอาหารทั้งหมด</li>
+                <li>คลิกที่อาหารเพื่อดูรายละเอียดและสูตรคราฟต์</li>
+            </ol>
+        </div>
+
+
+        <div class="plugin-commands">
+            <h2>Commands (คำสั่งปลั๊กอิน)</h2>
+
+            <h3>Basic commands (คำสั่งพื้นฐาน):</h3>
+            <div class="command-block">
+                /myfoods  - Show information about MyFoods<br>
+            </div>
+
+            <h3>Commands for administrators คำสั่งสำหรับผู้ดูแลระบบ:</h3>
+            <div class="command-block">
+                /myfoodsmenu - Open web management menu<br>
+                /myfoodsgive [player] [foodsnamecustom] [amount] - Give foods custom to player<br>
+                /myfoodsreload - Reload Foods<br>
+                /myfoodsdebug - Debug<br>
+            </div>
+
+            <h3>คำสั่งอนุญาต (Permissions):</h3>
+            <div class="command-block">
+                myfoods.menu - Allows Open web management menu (default: op)<br>
+                myfoods.give - Allows give foods player (default: op)<br>
+                myfoods.reload - Allows reloading the MyFoods configuration (default: op)<br>
+                myfoods.debug - Allows toggling debug mode (default: op)<br>
+            </div>
+        </div>
+
+        <div class="project-info">
+            <h3>About เกี่ยวกับปลั๊กอินนี้</h3>
+            <p>ปลั๊กอินนี้ฉันสร้างขึ้นเพื่อเล่นกับกลุ่มเพื่อนในช่วงแรก เนื่องจากอยากได้เมนูอาหารใหม่ๆ ในเกม
+                ระหว่างพัฒนาฉันใช้ภาษาไทยในการอธิบายและใส่ข้อมูลต่างๆ เพราะสะดวกและคุ้นเคย
+                แต่เมื่อเห็นว่าโปรเจคนี้น่าสนใจเลยตัดสินใจเผยแพร่ให้เพื่อนๆ ได้ลองใช้ โดยที่ฉันต้องแปลภาษาไทยเป็นภาษาอังกฤษ
+                แต่เนื่องจากฉันไม่เก่งภาษาอังกฤษจึงใช้โปรแกรมแปลภาษา หากมีการแปลผิดพลาดหรือแปลแปลกๆ โปรดเห็นใจทีนะคะ♥</p>
+        
+            <p>This plugin was initially created for fun with my friends because I wanted new food menus in the game. During
+                development, I used Thai to describe and add information because it's more convenient for me. However, after
+                realizing the project could be interesting to others, I decided to share it. I translated everything from Thai
+                to English, but since I'm not fluent in English, I used a translation tool. Please understand if there are any
+                mistakes or awkward translations♥.</p>
+        </div>
+
+    </div>
+</body>
+
+</html>

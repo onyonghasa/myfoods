@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <title>ตัวแสดงสูตรอาหาร Minecraft 1.21.4 (Lite Preview)</title>
+  <style>
+    :root {
+      --primary-color: #4CAF50;
+      --secondary-color: #f1c40f;
+      --danger-color: #e74c3c;
+      --light-color: #f9f9f9;
+      --dark-color: #333;
+      --border-color: #ddd;
+      --success-color: #339e4c;
+      --error-color: #f8d7da;
+      --info-color: #3498db;
+      --warning-color: #f39c12;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 20px;
+      background: var(--light-color);
+      color: var(--dark-color);
+      line-height: 1.6;
+    }
+
+    h1,
+    h2,
+    h3 {
+      color: var(--primary-color);
+      margin-top: 0;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .food-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .food-card {
+      background: white;
+      border-radius: 10px;
+      padding: 15px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .food-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .craft-status {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.8em;
+    }
+
+    .craft-status.active {
+      background-color: var(--success-color);
+      color: #ffffff;
+    }
+
+    .craft-status.inactive {
+      background-color: var(--error-color);
+      color: #721c24;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-content {
+      background-color: #fefefe;
+      margin: 5% auto;
+      padding: 20px;
+      border-radius: 8px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 800px;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .close:hover {
+      color: black;
+    }
+
+    .food-detail-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .recipe-grid-preview {
+      display: grid;
+      grid-template-columns: repeat(3, 80px);
+      gap: 5px;
+      margin-top: 10px;
+    }
+
+    .recipe-slot {
+      width: 80px;
+      height: 80px;
+      border: 1px solid var(--border-color);
+      background-color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      padding: 5px;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+
+    .recipe-slot.empty {
+      background-color: transparent;
+      border: 1px dashed var(--border-color);
+    }
+
+    .recipe-slot-content {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 12px;
+      word-break: break-word;
+    }
+
+    .recipe-slot-char {
+      font-weight: bold;
+      font-size: 16px;
+      margin-bottom: 3px;
+    }
+
+    .recipe-slot-material {
+      font-size: 10px;
+      line-height: 1.2;
+    }
+
+    .materials-summary {
+      margin-top: 15px;
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+    .json-section {
+      border: 1px solid var(--border-color);
+      background-color: #f8f9fa;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.9em;
+      line-height: 1.4;
+      overflow-x: auto;
+      margin-top: 20px;
+      display: none;
+      /* Initially hidden */
+    }
+
+    .json-section pre {
+      margin: 0;
+      padding: 10px;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+
+    .toggle-json {
+      background-color: var(--info-color);
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 10px;
+      font-size: 0.9em;
+      transition: background-color 0.3s;
+    }
+
+    .toggle-json:hover {
+      background-color: #2980b9;
+    }
+
+    @media (max-width: 768px) {
+      .food-list {
+        grid-template-columns: 1fr;
+      }
+
+      .modal-content {
+        width: 95%;
+      }
+
+      .food-detail-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .loading {
+      text-align: center;
+      padding: 20px;
+      font-size: 1.2em;
+      color: var(--primary-color);
+    }
+
+    .error-message {
+      color: var(--danger-color);
+      text-align: center;
+      padding: 20px;
+      font-size: 1.2em;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Myfoods (Lite Preview)</h1>
+
+    <div class="section">
+      <h2>All food items [รายการอาหารทั้งหมด]</h2>
+      <div id="loading" class="loading">
+        <i class="fas fa-spinner fa-spin"></i> Downloading (กำลังโหลดข้อมูล)...
+      </div>
+      <div id="error-message" class="error-message" style="display: none;"></div>
+      <div class="food-list" id="foodList"></div>
+    </div>
+  </div>
+
+  <!-- Modal for Food Details -->
+  <div id="foodDetailModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeFoodDetail()">&times;</span>
+      <div id="foodDetailContent"></div>
+    </div>
+  </div>
+
+  <script>
+    let foodData = [];
+
+    // โหลดข้อมูลจากไฟล์ JSON
+    async function loadFoodData() {
+      const loadingElement = document.getElementById('loading');
+      const errorElement = document.getElementById('error-message');
+      const foodListElement = document.getElementById('foodList');
+
+      try {
+        const response = await fetch('datafoods.json');
+
+        if (!response.ok) {
+          throw new Error('Data file not found or file is corrupted');
+        }
+
+        foodData = await response.json();
+        loadingElement.style.display = 'none';
+        displayFoodList();
+      } catch (error) {
+        console.error('Error loading food data:', error);
+        loadingElement.style.display = 'none';
+        errorElement.textContent = `An error occurred: ${error.message}`;
+        errorElement.style.display = 'block';
+      }
+    }
+
+    // แสดงรายการอาหาร
+    function displayFoodList() {
+      const container = document.getElementById("foodList");
+      container.innerHTML = "";
+
+      if (foodData.length === 0) {
+        container.innerHTML = "<p class='no-data'>No food information</p>";
+        return;
+      }
+
+      foodData.forEach((food, index) => {
+        const card = document.createElement("div");
+        card.className = "food-card";
+        card.onclick = () => showFoodDetail(food);
+
+        card.innerHTML = `
+          <div class="food-card-content">
+            <div class="food-header">
+              <h3>${food.displayName || 'ไม่มีชื่อ'}</h3>
+              <span class="craft-status ${food.craftable ? 'active' : 'inactive'}">
+                ${food.craftable ? 'Can Craft (สามารถคราฟต์)' : 'Closed (ปิดการคราฟต์)'}
+              </span>
+            </div>
+            <div class="food-details">
+              <p><i class="fas fa-tag"></i> <strong>UniqueID:</strong> ${food.uniqueID}</p>
+              <p><i class="fas fa-cube"></i> <strong>Material (ประเภท):</strong> ${food.foodMaterial}</p>
+              <p><i class="fas fa-heart"></i> <strong>Status (สถานะ):</strong> 
+                หิว +${food.hunger || 0}, 
+                อิ่ม +${food.saturation || 0}, 
+                สุขภาพ +${food.health || 0}
+              </p>
+            </div>
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
+    }
+
+    // แสดงรายละเอียดอาหาร
+    function showFoodDetail(food) {
+      const modal = document.getElementById("foodDetailModal");
+      const content = document.getElementById("foodDetailContent");
+
+      let html = `
+        <div class="food-detail-container">
+          <div class="food-detail-left">
+            <h2>${food.displayName || 'ไม่มีชื่อ'}</h2>
+            <p><strong>UniqueID:</strong> ${food.uniqueID}</p>
+            <p><strong>Material (ประเภท):</strong> ${food.foodMaterial}</p>
+            <p><strong>Craft (สถานะคราฟต์):</strong> 
+              <span class="craft-status ${food.craftable ? 'active' : 'inactive'}">
+                ${food.craftable ? '✅ Open (เปิดใช้งาน)' : '❌ Close (ปิดใช้งาน)'}
+              </span>
+            </p>
+            <p><strong>InstantEat (กินทันที):</strong>
+              <span class="craft-status ${food.instantEat ? 'active' : 'inactive'}">
+                ${food.instantEat ? '✅ Yes (ใช่)' : '❌ No (ไม่ใช่)'}
+              </span>
+            </p>
+
+            ${food.description && food.description.length > 0 ? `
+              <h3>Description (คำอธิบาย):</h3>
+              ${food.description.map(line => `<p>${line}</p>`).join('')}
+            ` : ''}
+
+            <h3>Status (ค่าสถานะ):</h3>
+            <ul>
+              <li>ความอิ่มตัว: +${food.saturation || 0}</li>
+              <li>ความหิว: +${food.hunger || 0}</li>
+              <li>สุขภาพ: +${food.health || 0}</li>
+            </ul>
+          </div>
+
+          <div class="food-detail-right">
+      `;
+
+      // ส่วนเอฟเฟกต์
+      if (food.potionEffects && Object.keys(food.potionEffects).length > 0) {
+        html += `
+          <div class="effects-section">
+            <h3>เอฟเฟกต์:</h3>
+            <div class="effects-list">
+              <ul>
+                ${Object.entries(food.potionEffects).map(([effect, details]) => `
+                  <li>${effect} (ระดับ ${details.amplifier}) - ${details.duration / 20} วินาที</li>
+                `).join('')}
+              </ul>
+            </div>
+          </div>
+        `;
+      }
+
+      // ส่วนสูตรคราฟต์
+      if (food.recipe) {
+        // นับจำนวนวัตถุดิบที่ใช้
+        const materialCounts = {};
+        for (const material of Object.values(food.recipe.materials)) {
+          materialCounts[material] = 0;
+        }
+
+        // นับจำนวนที่ใช้จริงในตาราง
+        for (const row of food.recipe.shape) {
+          for (const char of row) {
+            if (char && food.recipe.materials[char]) {
+              const material = food.recipe.materials[char];
+              materialCounts[material]++;
+            }
+          }
+        }
+
+        html += `
+          <div class="crafting-section">
+            <h3>สูตรคราฟต์:</h3>
+            <p>จำนวนที่ได้: ${food.recipe.craft_amount || 1}</p>
+            
+            <div class="recipe-grid-preview">
+              ${food.recipe.shape.map(row => `
+                ${row.split('').map(char => `
+                  <div class="recipe-slot ${char.trim() ? '' : 'empty'}">
+                    <div class="recipe-slot-content">
+                      ${char.trim() ? `
+                        <div class="recipe-slot-char">${char}</div>
+                        <div class="recipe-slot-material">${food.recipe.materials[char] || ''}</div>
+                      ` : ''}
+                    </div>
+                  </div>
+                `).join('')}
+              `).join('')}
+            </div>
+            
+            <div class="materials-summary">
+              <h4>วัตถุดิบที่ใช้:</h4>
+              <ul>
+                ${Object.entries(materialCounts)
+            .filter(([_, count]) => count > 0)
+            .map(([material, count]) => `<li>${material} ×${count}</li>`)
+            .join('') || '<li style="color: #777;">ไม่มีวัตถุดิบ</li>'}
+              </ul>
+            </div>
+          </div>
+        `;
+      }
+
+      // Add JSON toggle button and section
+      html += `
+          </div>
+          <button class="toggle-json" onclick="toggleJsonData()">
+            <i class="fas fa-code"></i> Show JSON Data
+          </button>
+          <div class="json-section">
+            <h3>JSON Data:</h3>
+            <pre>${JSON.stringify(food, null, 2)}</pre>
+          </div>
+        </div>
+      `;
+
+      content.innerHTML = html;
+      modal.style.display = "block";
+    }
+
+    // Toggle JSON data visibility
+    function toggleJsonData() {
+      const jsonSection = document.querySelector('.json-section');
+      const toggleButton = document.querySelector('.toggle-json');
+
+      if (jsonSection.style.display === 'none' || !jsonSection.style.display) {
+        jsonSection.style.display = 'block';
+        toggleButton.innerHTML = '<i class="fas fa-code"></i> Hide JSON Data';
+      } else {
+        jsonSection.style.display = 'none';
+        toggleButton.innerHTML = '<i class="fas fa-code"></i> Show JSON Data';
+      }
+    }
+
+    // ปิด modal รายละเอียดอาหาร
+    function closeFoodDetail() {
+      document.getElementById("foodDetailModal").style.display = "none";
+    }
+
+    // เริ่มต้นทำงานเมื่อโหลดหน้าเว็บ
+    window.onload = function () {
+      loadFoodData();
+
+      // ปิด modal เมื่อคลิกนอกพื้นที่
+      window.addEventListener('click', function (event) {
+        if (event.target === document.getElementById('foodDetailModal')) {
+          closeFoodDetail();
+        }
+      });
+    };
+  </script>
+</body>
+
+</html>

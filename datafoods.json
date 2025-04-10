@@ -1,0 +1,1674 @@
+[
+  {
+    "uniqueID": "magic_apple",
+    "displayName": "&6Magic Golden Apple",
+    "description": [
+      "&7A mystical golden apple",
+      "&7that grants special powers",
+      "",
+      "&eEffects:",
+      "&aSaturation:&9 +20",
+      "&aHunger:&9 +20",
+      "&aHealth:&9 +20"
+    ],
+    "instantEat": false,
+    "foodMaterial": "PLAYER_HEAD",
+    "headTexture": "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTk4MjkwYzZjNDk0NmQ2YTkyNDMzYzU2N2E2NGQzY2FhM2RiMDBjMGRlYTc4NDFlYmRhOWRkNDViYzUzNmQxZiJ9fX0=",
+    "potionEffects": {
+      "FIRE_RESISTANCE": {
+        "amplifier": 0,
+        "duration": 100
+      }
+    },
+    "saturation": 20,
+    "hunger": 20,
+    "health": 20,
+    "craftable": false,
+    "recipe": {
+      "shape": [
+        "ggg",
+        "gag",
+        "ggg"
+      ],
+      "materials": {
+        "g": "GOLD_BLOCK",
+        "a": "APPLE"
+      },
+      "craft_amount": 1
+    }
+  },
+  {
+    "uniqueID": "spicy_chicken",
+    "displayName": "&cSpicy Chicken",
+    "description": [
+      "&7Extra spicy chicken!",
+      "&4Warning: Very hot!",
+      "",
+      "&eEffects:",
+      "&aSaturation:&9 +10",
+      "&aHunger:&9 +8",
+      "&aHealth:&9 +1"
+    ],
+    "instantEat": false,
+    "foodMaterial": "COOKED_CHICKEN",
+    "potionEffects": {
+      "FIRE_RESISTANCE": {
+        "amplifier": 0,
+        "duration": 100
+      }
+    },
+    "saturation": 10,
+    "hunger": 8,
+    "health": 1,
+    "craftable": false,
+    "recipe": {
+      "shape": [
+        " p ",
+        "pcp",
+        " p "
+      ],
+      "materials": {
+        "p": "PAPER",
+        "c": "COOKED_CHICKEN"
+      },
+      "craft_amount": 1
+    }
+  },
+  {
+    "uniqueID": "food_Burger_beef",
+    "displayName": "&dBurger Beef",
+    "description": [
+      "&3เบอร์เกอร์เนื้อ!",
+      "&7เคี้ยวยากแต่ก็อร่อยนะ!",
+      "",
+      "&eEffects:",
+      "&aSaturation:&9 +16",
+      "&aHunger:&9 +8",
+      "&aHealth:&9 +3"
+    ],
+    "instantEat": true,
+    "foodMaterial": "PLAYER_HEAD",
+    "headTexture": "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOGM1MTNlMWJlOWViMTM4MjIxNTU4MGRkN2NjZDAxZTRkNzQxMGEzMzY1ZGNlNTkwMTA0Yzc5MWIzYTMyOTg2OSJ9fX0=",
+    "potionEffects": {
+      "STRENGTH": {
+        "amplifier": 0,
+        "duration": 600
+      }
+    },
+    "saturation": 16,
+    "hunger": 8,
+    "health": 3,
+    "craftable": true,
+    "recipe": {
+      "shape": [
+        " b ",
+        " c ",
+        " b "
+      ],
+      "materials": {
+        "b": "BREAD",
+        "c": "COOKED_BEEF"
+      },
+      "craft_amount": 1
+    }
+  },
+  {
+    "uniqueID": "food_Burger_chicken",
+    "displayName": "&dBurger Chicken",
+    "description": [
+      "&3เบอร์เกอร์ไก่!",
+      "&7ลองกินจะติดใจ!",
+      "",
+      "&eEffects:",
+      "&aSaturation:&9 +12",
+      "&aHunger:&9 +6",
+      "&aHealth:&9 +2"
+    ],
+    "instantEat": true,
+    "foodMaterial": "PLAYER_HEAD",
+    "headTexture": "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYTc4NWNjZTc4ODRiYTNiYjJhZTA5OWRjNmI3OTUxNTg2MWViZTY3NGNkMzI3OWRkZmUxZWFmMzBjYjhjMzNmYyJ9fX0=",
+    "potionEffects": {
+      "SPEED": {
+        "amplifier": 0,
+        "duration": 400
+      }
+    },
+    "saturation": 12,
+    "hunger": 6,
+    "health": 2,
+    "craftable": true,
+    "recipe": {
+      "shape": [
+        " b ",
+        " c ",
+        " b "
+      ],
+      "materials": {
+        "b": "BREAD",
+        "c": "COOKED_CHICKEN"
+      },
+      "craft_amount": 1
+    }
+  },
+  {
+    "uniqueID": "food_Burger_mutton",
+    "displayName": "&dBurger Mutton",
+    "description": [
+      "&3เบอร์เกอร์แกะ!",
+      "&7แกะน้อย!",
+      "",
+      "&eEffects:",
+      "&aSaturation:&9 +10",
+      "&aHunger:&9 +5",
+      "&aHealth:&9 +1"
+    ],
+    "instantEat": true,
+    "foodMaterial": "PLAYER_HEAD",
+    "headTexture": "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvN2Y1NzhjOWMwZmQxYTYzMzc5ZDBkMTY2ZDBmYTk0YzBkZDlkYmE5NzBlNWFkZjFkNzhkZDg5ODUyNzJhYjE2OCJ9fX0=",
+    "potionEffects": {
+      "JUMP": {
+        "amplifier": 0,
+        "duration": 300
+      }
+    },
+    "saturation": 10,
+    "hunger": 5,
+    "health": 1,
+    "craftable": true,
+    "recipe": {
+      "shape": [
+        " b ",
+        " c ",
+        " b "
+      ],
+      "materials": {
+        "b": "BREAD",
+        "c": "COOKED_MUTTON"
+      },
+      "craft_amount": 1
+    }
+  },
+  {
+    "uniqueID": "food_Burger_fish",
+    "displayName": "&dBurger fish",
+    "description": [
+      "&3เบอร์เกอร์ปลาย่าง!",
+      "&7ปลาย่างจ้า!",
+      "",
+      "&eEffects:",
+      "&aSaturation:&9 +7",
+      "&aHunger:&9 +3",
+      "&aHealth:&9 +0.5"
+    ],
+    "instantEat": true,
+    "foodMaterial": "PLAYER_HEAD",
+    "headTexture": "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGRkZmI0NGQ2YjU4MTU2OWUwOWQzNzgzYjBkZGMzZDkyMGNkMTViOWUxOTAzMmU5MzFmZmFhY2I3Nzk1NTZkNCJ9fX0=",
+    "potionEffects": {
+      "WATER_BREATHING": {
+        "amplifier": 0,
+        "duration": 600
+      }
+    },
+    "saturation": 6,
+    "hunger": 3,
+    "health": 0.5,
+    "craftable": false,
+    "recipe": {
+      "shape": [
+        " b ",
+        " s ",
+        " b "
+      ],
+      "materials": {
+        "b": "BREAD",
+        "s": "COOKED_COD"
+      },
+      "craft_amount": 1
+    }
+  },
+  {
+    "uniqueID": "food_Burger_clownfish",
+    "displayName": "&dBurger Clownfish",
+    "description": [
+      "&3เบอร์เกอร์ปลาเขตร้อน!",
+      "&7ปลาย่างจ้าร้อนจริงๆ!",
+      "",
+      "&eEffects:",
+      "&aSaturation:&9 +4",
+      "&aHunger:&9 +2",
+      "&aHealth:&9 +0.5"
+    ],
+    "instantEat": true,
+    "foodMaterial": "PLAYER_HEAD",
+    "headTexture": "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjEyNzJjZjhmODZkMGViMTliODE5YWEyYzdmNDk3MGNlZDdmNDBjZTIxMDE3ZWEyM2NhNzdiZjZlM2RmNWRlMiJ9fX0=",
+    "potionEffects": {
+      "DOLPHINS_GRACE": {
+        "amplifier": 0,
+        "duration": 400
+      }
+    },
+    "saturation": 6,
+    "hunger": 3,
+    "health": 0.5,
+    "craftable": true,
+    "recipe": {
+      "shape": [
+        " b ",
+        " t ",
+        " b "
+      ],
+      "materials": {
+        "b": "BREAD",
+        "t": "TROPICAL_FISH"
+      },
+      "craft_amount": 1
+    }
+  },
+  {
+    "uniqueID": "food_Burger_pufferfish",
+    "displayName": "&dBurger Pufferfish",
+    "description": [
+      "&3เบอร์เกอร์ปลาปักเป้า!",
+      "&7ปลานั้นโก้จริงๆ!",
+      "",
+      "&eEffects:",
+      "&aSaturation:&9 +6",
+      "&aHunger:&9 +2",
+      "&aHealth:&9 +0.5"
+    ],
+    "saturation": 6,
+    "hunger": 2,
+    "health": 0.5,
+    "instantEat": true,
+    "foodMaterial": "PLAYER_HEAD",
+    "headTexture": "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTQ1MTlkYTA5OTk4NzJiOGRhMjU3NDI2YzVlZTJhMDg1NTA4YTNjZDM3YTI1ZTA2ZDExMDA3ZjZmYjExYjkxMSJ9fX0=",
+    "potionEffects": {
+      "POISON": {
+        "amplifier": 0,
+        "duration": 100
+      },
+      "WATER_BREATHING": {
+        "amplifier": 0,
+        "duration": 600
+      }
+    },
+    "craftable": true,
+    "recipe": {
+      "shape": [
+        " b ",
+        " p ",
+        " b "
+      ],
+      "materials": {
+        "b": "BREAD",
+        "p": "PUFFERFISH"
+      },
+      "craft_amount": 1
+    }
+  },
+  {
+    "uniqueID": "food_Burger_porkchop",
+    "displayName": "&dBurger Porkchop",
+    "description": [
+      "&3เบอร์เกอรหมู!",
+      "&7อู๊ดอี๊ด อู๊ดอี๊ด!",
+      "",
+      "&eEffects:",
+      "&aSaturation:&9 +16",
+      "&aHunger:&9 +8",
+      "&aHealth:&9 +2"
+    ],
+    "instantEat": true,
+    "foodMaterial": "PLAYER_HEAD",
+    "headTexture": "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMmFlNGYxYjJhNDU4YzM5MzAxYjkzZDFkODFiYTQxYjljNGExMmMxMGQ0ZmIzM2RkMDJkNTQ5Zjc0YWQxZWJlYiJ9fX0=",
+    "potionEffects": {
+      "SATURATION": {
+        "amplifier": 0,
+        "duration": 400
+      }
+    },
+    "saturation": 9,
+    "hunger": 8,
+    "health": 2,
+    "craftable": true,
+    "recipe": {
+      "shape": [
+        " b ",
+        " p ",
+        " b "
+      ],
+      "materials": {
+        "b": "BREAD",
+        "p": "COOKED_PORKCHOP"
+      },
+      "craft_amount": 1
+    }
+  },
+  {
+    "uniqueID": "food_Burger_salmon",
+    "displayName": "&dBurger Salmon",
+    "description": [
+      "&3เบอร์เกอร์แซลม่อน!",
+      "&7อย่าแซวม่อนกันนะ!",
+      "",
+      "&eEffects:",
+      "&aSaturation:&9 +6",
+      "&aHunger:&9 +3",
+      "&aHealth:&9 +0.5"
+    ],
+    "instantEat": true,
+    "foodMaterial": "PLAYER_HEAD",
+    "headTexture": "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjEyNzJjZjhmODZkMGViMTliODE5YWEyYzdmNDk3MGNlZDdmNDBjZTIxMDE3ZWEyM2NhNzdiZjZlM2RmNWRlMiJ9fX0=",
+    "potionEffects": {
+      "LUCK": {
+        "amplifier": 0,
+        "duration": 600
+      }
+    },
+    "saturation": 6,
+    "hunger": 3,
+    "health": 0.5,
+    "craftable": true,
+    "recipe": {
+      "shape": [
+        " b ",
+        " s ",
+        " b "
+      ],
+      "materials": {
+        "b": "BREAD",
+        "s": "COOKED_SALMON"
+      },
+      "craft_amount": 1
+    }
+  },
+  {
+    "uniqueID": "food_Bento_Box_Chicken",
+    "displayName": "&dBento Box Chicken",
+    "description": [
+      "&3กล่องข้าวญี่ปุ่น จัดเต็มทั้งคาวหวาน!",
+      "&7มีทั้งข้าว ไก่ ไข่ และผักรวมกันในกล่องเดียว!",
+      "",
+      "&eEffects:",
+      "&aSaturation:&9 +16",
+      "&aHunger:&9 +10",
+      "&aHealth:&9 +3"
+    ],
+    "instantEat": false,
+    "foodMaterial": "PLAYER_HEAD",
+    "headTexture": "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZmUzMDUyYzUzNWUxNDU5N2E0MTNlYzMyYjMyYWFmZGQyODY4NmZkYWI2ZWVkNzMwMzBlMWI5NGY3YzM4ZmYifX19",
+    "potionEffects": {
+      "REGENERATION": {
+        "amplifier": 0,
+        "duration": 100
+      },
+      "SATURATION": {
+        "amplifier": 0,
+        "duration": 1200
+      }
+    },
+    "saturation": 16,
+    "hunger": 10,
+    "health": 3,
+    "craftable": true,
+    "recipe": {
+      "shape": [
+        "sec",
+        "rbo",
+        " w "
+      ],
+      "materials": {
+        "s": "COOKED_SALMON",
+        "e": "EGG",
+        "c": "COOKED_CHICKEN",
+        "r": "CARROT",
+        "b": "BAKED_POTATO",
+        "o": "BEETROOT",
+        "w": "BOWL"
+      },
+      "craft_amount": 1
+    }
+  },
+  {
+    "uniqueID": "food_Bento_Box_porkchop",
+    "displayName": "&dBento Box PorkChop",
+    "description": [
+      "&3กล่องข้าวญี่ปุ่น จัดเต็มทั้งคาวหวาน!",
+      "&7มีทั้งข้าว หมู ไข่ และผักรวมกันในกล่องเดียว!",
+      "",
+      "&eEffects:",
+      "&aSaturation:&9 +17",
+      "&aHunger:&9 +11",
+      "&aHealth:&9 +3"
+    ],
+    "instantEat": false,
+    "foodMaterial": "PLAYER_HEAD",
+    "headTexture": "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzE2YjEyMDdiOTczMTk3YmI1YTUwZTZiYTliMzYxMzIzOGI4NzQxMzk2NTYwZGU3ZjkwMGIzOTA3MmM5MDVkZCJ9fX0=",
+    "potionEffects": {
+      "INCREASE_DAMAGE": {
+        "amplifier": 0,
+        "duration": 200
+      },
+      "SATURATION": {
+        "amplifier": 0,
+        "duration": 1200
+      }
+    },
+    "saturation": 17,
+    "hunger": 11,
+    "health": 3,
+    "craftable": true,
+    "recipe": {
+      "shape": [
+        "sec",
+        "rbo",
+        " w "
+      ],
+      "materials": {
+        "s": "COOKED_SALMON",
+        "e": "EGG",
+        "c": "COOKED_PORKCHOP",
+        "r": "CARROT",
+        "b": "BAKED_POTATO",
+        "o": "BEETROOT",
+        "w": "BOWL"
+      },
+      "craft_amount": 1
+    }
+  },
+  {
+    "uniqueID": "food_Bento_Box_beef",
+    "displayName": "&dBento Box Beef",
+    "description": [
+      "&3กล่องข้าวญี่ปุ่น จัดเต็มทั้งคาวหวาน!",
+      "&7มีทั้งข้าว เนื้อ ไข่ และผักรวมกันในกล่องเดียว!",
+      "",
+      "&eEffects:",
+      "&aSaturation:&9 +18",
+      "&aHunger:&9 +12",
+      "&aHealth:&9 +3"
+    ],
+    "instantEat": false,
+    "foodMaterial": "PLAYER_HEAD",
+    "headTexture": "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTNmODg5MGMxNGRhYTQ4YTNkMjJmMmJhZGUxMTJiNDE0YWQ3MzgwMzdjOThlYTg5OGIzYzM0MjkzYjE1N2NmMCJ9fX0=",
+    "potionEffects": {
+      "REGENERATION": {
+        "amplifier": 0,
+        "duration": 200
+      },
+      "SATURATION": {
+        "amplifier": 0,
+        "duration": 1200
+      }
+    },
+    "saturation": 18,
+    "hunger": 12,
+    "health": 3,
+    "craftable": true,
+    "recipe": {
+      "shape": [
+        "sec",
+        "rbo",
+        " w "
+      ],
+      "materials": {
+        "s": "COOKED_SALMON",
+        "e": "EGG",
+        "c": "COOKED_BEEF",
+        "r": "CARROT",
+        "b": "BAKED_POTATO",
+        "o": "BEETROOT",
+        "w": "BOWL"
+      },
+      "craft_amount": 1
+    }
+  },
+  {
+    "uniqueID": "drink_beer",
+    "displayName": "&6Crafted Beer",
+    "description": [
+      "",
+      "&eเบียร์ท้องถิ่นหมักเองจากข้าวสาลีชั้นดี",
+      "&7เย็นซ่า ดื่มแล้วชื่นใจ... หรือมึนหัวนิด ๆ",
+      "&8ขวดเล็กแต่แรง ระวังเมาไม่รู้ตัว!",
+      "",
+      "&eEffects:",
+      "&aSaturation:&9 +2",
+      "&aHunger:&9 +2",
+      "&aHealth:&9 +1"
+    ],
+    "instantEat": false,
+    "foodMaterial": "POTION",
+    "outputFoodMaterial": "POTION",
+    "potionColor": "ORANGE",
+    "potionEffects": {
+      "FIRE_RESISTANCE": {
+        "amplifier": 0,
+        "duration": 1200
+      },
+      "NAUSEA": {
+        "amplifier": 0,
+        "duration": 200
+      },
+      "REGENERATION": {
+        "amplifier": 0,
+        "duration": 1000
+      },
+      "SLOW": {
+        "amplifier": 0,
+        "duration": 800
+      }
+    },
+    "saturation": 2,
+    "hunger": 2,
+    "health": 1,
+    "craftable": true,
+    "recipe": {
+      "shape": [
+        "sss",
+        "wBw",
+        " t "
+      ],
+      "materials": {
+        "s": "SUGAR",
+        "w": "WHEAT",
+        "B": "FERMENTED_SPIDER_EYE",
+        "t": "POTION"
+      },
+      "craft_amount": 3
+    }
+  },
+  {
+    "uniqueID": "drink_soju_green",
+    "displayName": "&aSoju - Green Apple",
+    "description": [
+      "&aโซจูรสแอปเปิ้ลเขียว หอมหวานสดชื่น!",
+      "&7เพิ่มความเร็ว และเติมเลือดเบา ๆ",
+      "",
+      "&eEffects:",
+      "&aSaturation:&9 +2",
+      "&aHunger:&9 +1",
+      "&aHealth:&9 +1"
+    ],
+    "instantEat": false,
+    "foodMaterial": "POTION",
+    "outputFoodMaterial": "POTION",
+    "potionColor": "LIME",
+    "potionEffects": {
+      "SPEED": {
+        "amplifier": 0,
+        "duration": 1400
+      },
+      "REGENERATION": {
+        "amplifier": 0,
+        "duration": 1000
+      }
+    },
+    "saturation": 2,
+    "hunger": 1,
+    "health": 1,
+    "craftable": true,
+    "recipe": {
+      "shape": [
+        " s ",
+        "aSa",
+        " t "
+      ],
+      "materials": {
+        "s": "SUGAR",
+        "a": "APPLE",
+        "S": "FERMENTED_SPIDER_EYE",
+        "t": "POTION"
+      },
+      "craft_amount": 2
+    }
+  },
+  {
+    "uniqueID": "drink_soju_beetroot",
+    "displayName": "&4Soju - Beetroot",
+    "description": [
+      "&4โซจูรสบีทรูท กลิ่นดินเฉพาะตัว มีประโยชน์ต่อสุขภาพ!",
+      "&7ช่วยฟื้นฟูเล็กน้อยและล้างพิษในร่างกาย",
+      "",
+      "&eEffects:",
+      "&aSaturation:&9 +2",
+      "&aHunger:&9 +2",
+      "&aHealth:&9 +1"
+    ],
+    "instantEat": false,
+    "foodMaterial": "POTION",
+    "outputFoodMaterial": "POTION",
+    "potionColor": "DARK_RED",
+    "potionEffects": {
+      "REGENERATION": {
+        "amplifier": 0,
+        "duration": 1000
+      },
+      "POISON": {
+        "amplifier": 0,
+        "duration": 0
+      }
+    },
+    "saturation": 2,
+    "hunger": 2,
+    "health": 1,
+    "craftable": true,
+    "recipe": {
+      "shape": [
+        " s ",
+        "bSb",
+        " t "
+      ],
+      "materials": {
+        "s": "SUGAR",
+        "b": "BEETROOT",
+        "S": "FERMENTED_SPIDER_EYE",
+        "t": "POTION"
+      },
+      "craft_amount": 2
+    }
+  },
+  {
+    "uniqueID": "drink_soju_blueberry",
+    "displayName": "&9Soju - Blueberry",
+    "description": [
+      "&9โซจูรสบลูเบอร์รี่ หอมลึกลับ เย็นลึกถึงใจ",
+      "&7ให้พลังต้านทาน พร้อมความเร็วในการขุด",
+      "",
+      "&eEffects:",
+      "&aSaturation:&9 +2",
+      "&aHunger:&9 +2",
+      "&aHealth:&9 +1"
+    ],
+    "instantEat": false,
+    "foodMaterial": "POTION",
+    "outputFoodMaterial": "POTION",
+    "potionColor": "BLUE",
+    "potionEffects": {
+      "DAMAGE_RESISTANCE": {
+        "amplifier": 0,
+        "duration": 1200
+      },
+      "FAST_DIGGING": {
+        "amplifier": 0,
+        "duration": 1400
+      }
+    },
+    "saturation": 2,
+    "hunger": 2,
+    "health": 1,
+    "craftable": true,
+    "recipe": {
+      "shape": [
+        " s ",
+        "lSl",
+        " t "
+      ],
+      "materials": {
+        "s": "SUGAR",
+        "l": "LAPIS_LAZULI",
+        "S": "FERMENTED_SPIDER_EYE",
+        "t": "POTION"
+      },
+      "craft_amount": 3
+    }
+  },
+  {
+    "uniqueID": "drink_soju_watermelon",
+    "displayName": "&cSoju - Watermelon",
+    "description": [
+      "&cโซจูรสแตงโม หวานเย็นฉ่ำ ดับร้อนชุ่มใจ!",
+      "&7เติมเลือดเล็กน้อย พร้อมต้านไฟชั่วคราว",
+      "",
+      "&eEffects:",
+      "&aSaturation:&9 +2",
+      "&aHunger:&9 +2",
+      "&aHealth:&9 +1"
+    ],
+    "instantEat": false,
+    "foodMaterial": "POTION",
+    "outputFoodMaterial": "POTION",
+    "potionColor": "RED",
+    "potionEffects": {
+      "REGENERATION": {
+        "amplifier": 0,
+        "duration": 1000
+      },
+      "FIRE_RESISTANCE": {
+        "amplifier": 0,
+        "duration": 1400
+      }
+    },
+    "saturation": 2,
+    "hunger": 2,
+    "health": 1,
+    "craftable": true,
+    "recipe": {
+      "shape": [
+        " s ",
+        "mSm",
+        " t "
+      ],
+      "materials": {
+        "s": "SUGAR",
+        "m": "MELON_SLICE",
+        "S": "FERMENTED_SPIDER_EYE",
+        "t": "POTION"
+      },
+      "craft_amount": 2
+    }
+  },
+  {
+    "uniqueID": "drink_soju_sweetberry",
+    "displayName": "&cSoju - Sweet Berry",
+    "description": [
+      "&cโซจูรสเบอร์รี่ป่า หวานอมเปรี้ยวสดชื่น~",
+      "&7ให้พลังต้านพิษและเติมเลือดเบาๆ",
+      "",
+      "&eEffects:",
+      "&aSaturation:&9 +2",
+      "&aHunger:&9 +2",
+      "&aHealth:&9 +1"
+    ],
+    "foodMaterial": "POTION",
+    "outputFoodMaterial": "POTION",
+    "potionColor": "DARK_RED",
+    "potionEffects": {
+      "POISON": {
+        "amplifier": 0,
+        "duration": 0
+      },
+      "REGENERATION": {
+        "amplifier": 0,
+        "duration": 1000
+      }
+    },
+    "instantEat": false,
+    "saturation": 2,
+    "hunger": 2,
+    "health": 1,
+    "craftable": true,
+    "recipe": {
+      "shape": [
+        " s ",
+        "bSb",
+        " t "
+      ],
+      "materials": {
+        "s": "SUGAR",
+        "b": "SWEET_BERRIES",
+        "S": "FERMENTED_SPIDER_EYE",
+        "t": "POTION"
+      },
+      "craft_amount": 3
+    }
+  },
+  {
+    "uniqueID": "drink_soju_chorus",
+    "displayName": "&5Soju - Chorus Fruit",
+    "description": [
+      "&5โซจูลึกลับจากผลคอรัส ดื่มแล้วหายตัวไปไหนไม่รู้!",
+      "&7ให้พลัง Teleport แบบสุ่ม",
+      "",
+      "&eEffects:",
+      "&aSaturation:&9 +2",
+      "&aHunger:&9 +2",
+      "&aHealth:&9 +0"
+    ],
+    "instantEat": false,
+    "foodMaterial": "POTION",
+    "outputFoodMaterial": "POTION",
+    "potionColor": "PURPLE",
+    "potionEffects": {
+      "LEVITATION": {
+        "amplifier": 0,
+        "duration": 60
+      },
+      "CONFUSION": {
+        "amplifier": 0,
+        "duration": 200
+      }
+    },
+    "saturation": 2,
+    "hunger": 1,
+    "health": 0,
+    "craftable": true,
+    "recipe": {
+      "shape": [
+        " s ",
+        "cSc",
+        " t "
+      ],
+      "materials": {
+        "s": "SUGAR",
+        "c": "CHORUS_FRUIT",
+        "S": "FERMENTED_SPIDER_EYE",
+        "t": "POTION"
+      },
+      "craft_amount": 1
+    }
+  },
+  {
+    "uniqueID": "drink_soju_carrot",
+    "displayName": "&6Soju - Carrot",
+    "description": [
+      "&6โซจูแครอท เสริมสายตา ดื่มแล้วมองชัดในความมืด!",
+      "&7ให้ Night Vision และความเร็วเล็กน้อย",
+      "",
+      "&eEffects:",
+      "&aSaturation:&9 +2",
+      "&aHunger:&9 +2",
+      "&aHealth:&9 +1"
+    ],
+    "instantEat": false,
+    "foodMaterial": "POTION",
+    "outputFoodMaterial": "POTION",
+    "potionColor": "GOLD",
+    "potionEffects": {
+      "NIGHT_VISION": {
+        "amplifier": 0,
+        "duration": 2400
+      },
+      "SPEED": {
+        "amplifier": 0,
+        "duration": 1000
+      }
+    },
+    "saturation": 2,
+    "hunger": 2,
+    "health": 1,
+    "craftable": true,
+    "recipe": {
+      "shape": [
+        " s ",
+        "rSr",
+        " t "
+      ],
+      "materials": {
+        "s": "SUGAR",
+        "r": "CARROT",
+        "S": "FERMENTED_SPIDER_EYE",
+        "t": "POTION"
+      },
+      "craft_amount": 2
+    }
+  },
+  {
+    "uniqueID": "drink_soju_milk",
+    "displayName": "&fSoju - Milk",
+    "description": [
+      "&fโซจูนม นุ่มนวลละมุน ดื่มแล้วล้างทุกสถานะ!",
+      "&7เคลียร์บัฟ/ดีบัฟทั้งหมด เหมาะหลังสู้บอส",
+      "",
+      "&eEffects:",
+      "&aSaturation:&9 +2",
+      "&aHunger:&9 +2",
+      "&aHealth:&9 +2"
+    ],
+    "instantEat": false,
+    "foodMaterial": "POTION",
+    "outputFoodMaterial": "POTION",
+    "potionColor": "WHITE",
+    "potionEffects": {
+      "HEALTH_BOOST": {
+        "amplifier": 0,
+        "duration": 1200
+      },
+      "BLINDNESS": {
+        "amplifier": 0,
+        "duration": 0
+      }
+    },
+    "saturation": 2,
+    "hunger": 2,
+    "health": 2,
+    "craftable": true,
+    "recipe": {
+      "shape": [
+        " s ",
+        "mSm",
+        " t "
+      ],
+      "materials": {
+        "s": "SUGAR",
+        "m": "MILK_BUCKET",
+        "S": "FERMENTED_SPIDER_EYE",
+        "t": "POTION"
+      },
+      "craft_amount": 1
+    }
+  },
+  {
+    "uniqueID": "drink_soju_honey",
+    "displayName": "&eSoju - Honey",
+    "description": [
+      "&eโซจูน้ำผึ้ง หวานกลมกล่อม แถมต้านพิษ!",
+      "&7เหมาะสำหรับนักผจญภัยสายหวาน~",
+      "",
+      "&eEffects:",
+      "&aSaturation:&9 +2",
+      "&aHunger:&9 +2",
+      "&aHealth:&9 +1"
+    ],
+    "instantEat": false,
+    "foodMaterial": "POTION",
+    "outputFoodMaterial": "POTION",
+    "potionColor": "YELLOW",
+    "potionEffects": {
+      "REGENERATION": {
+        "amplifier": 0,
+        "duration": 1000
+      },
+      "POISON": {
+        "amplifier": 0,
+        "duration": 0
+      }
+    },
+    "saturation": 2,
+    "hunger": 2,
+    "health": 1,
+    "craftable": true,
+    "recipe": {
+      "shape": [
+        " s ",
+        "hSh",
+        " t "
+      ],
+      "materials": {
+        "s": "SUGAR",
+        "h": "HONEY_BOTTLE",
+        "S": "FERMENTED_SPIDER_EYE",
+        "t": "POTION"
+      },
+      "craft_amount": 2
+    }
+  },
+  {
+    "uniqueID": "drink_thai_whisky",
+    "displayName": "&fเหล้าขาวไทย",
+    "description": [
+      "&fสุราขาวไทยสูตรดั้งเดิม 40% Alc.",
+      "&7กลิ่นแรง ดื่มแล้วมึนหัวยาว!",
+      "&8เหมาะสำหรับงานเลี้ยงหรือเมาหลังเลิกงาน~",
+      "",
+      "&eEffects:",
+      "&aความมึนเมา: &cสูงมาก",
+      "&aโทษ: &cตาพร่า + เดินเซ + อาเจียน"
+    ],
+    "instantEat": false,
+    "foodMaterial": "POTION",
+    "outputFoodMaterial": "POTION",
+    "potionColor": "WHITE",
+    "potionEffects": {
+      "NAUSEA": {
+        "amplifier": 1,
+        "duration": 1600
+      },
+      "SLOW": {
+        "amplifier": 2,
+        "duration": 1600
+      },
+      "BLINDNESS": {
+        "amplifier": 0,
+        "duration": 1600
+      },
+      "CONFUSION": {
+        "amplifier": 0,
+        "duration": 1600
+      },
+      "HUNGER": {
+        "amplifier": 0,
+        "duration": 1600
+      }
+    },
+    "saturation": 2,
+    "hunger": 0,
+    "health": 0,
+    "craftable": true,
+    "recipe": {
+      "shape": [
+        "sss",
+        "fff",
+        "wbw"
+      ],
+      "materials": {
+        "s": "SUGAR",
+        "w": "WHEAT",
+        "f": "FERMENTED_SPIDER_EYE",
+        "b": "POTION"
+      },
+      "craft_amount": 3
+    }
+  },
+  {
+    "uniqueID": "food_Candy_Apple",
+    "displayName": "&dCandy Apple",
+    "description": [
+      "&cแอปเปิ้ลเคลือบน้ำตาล!",
+      "&7หวานกรุบ กัดแล้วเพลิน~",
+      "",
+      "&eEffects:",
+      "&aSaturation:&9 +4",
+      "&aHunger:&9 +4",
+      "&aHealth:&9 +1",
+      "&bSpeed I (0:20)"
+    ],
+    "instantEat": false,
+    "foodMaterial": "GOLDEN_APPLE",
+    "headTexture": "",
+    "saturation": 4,
+    "hunger": 4,
+    "health": 1,
+    "craftable": true,
+    "potionEffects": {
+      "SPEED": {
+        "duration": 800,
+        "amplifier": 0
+      }
+    },
+    "recipe": {
+      "shape": [
+        " s ",
+        "sas",
+        " s "
+      ],
+      "materials": {
+        "a": "APPLE",
+        "s": "SUGAR"
+      },
+      "craft_amount": 1
+    }
+  },
+  {
+    "uniqueID": "food_Honey_Apple",
+    "displayName": "&eHoney Apple",
+    "description": [
+      "&6แอปเปิ้ลเคลือบน้ำผึ้ง!",
+      "&7หวานหอม เพิ่มพลังชีวิตเบาๆ",
+      "",
+      "&eEffects:",
+      "&aSaturation:&9 +5",
+      "&aHunger:&9 +5",
+      "&aHealth:&9 +1.5",
+      "&dRegeneration I (0:10)"
+    ],
+    "instantEat": false,
+    "foodMaterial": "GOLDEN_APPLE",
+    "headTexture": "",
+    "saturation": 5,
+    "hunger": 5,
+    "health": 1.5,
+    "craftable": true,
+    "potionEffects": {
+      "REGENERATION": {
+        "duration": 800,
+        "amplifier": 0
+      }
+    },
+    "recipe": {
+      "shape": [
+        " h ",
+        " a ",
+        "   "
+      ],
+      "materials": {
+        "h": "HONEY_BOTTLE",
+        "a": "APPLE"
+      },
+      "craft_amount": 1
+    }
+  },
+  {
+    "uniqueID": "food_Berry_Apple",
+    "displayName": "&dBerry Apple",
+    "description": [
+      "&5แอปเปิ้ลเคลือบเบอร์รี่!",
+      "&7เปรี้ยวอมหวาน สดชื่น!",
+      "",
+      "&eEffects:",
+      "aSaturation:&9 +5",
+      "&aHunger:&9 +4",
+      "&aHealth:&9 +1",
+      "&dNight Vision (0:15)"
+    ],
+    "instantEat": false,
+    "foodMaterial": "GOLDEN_APPLE",
+    "headTexture": "",
+    "saturation": 5,
+    "hunger": 4,
+    "health": 1,
+    "craftable": true,
+    "potionEffects": {
+      "NIGHT_VISION": {
+        "duration": 400,
+        "amplifier": 0
+      }
+    },
+    "recipe": {
+      "shape": [
+        " b ",
+        "bab",
+        " b "
+      ],
+      "materials": {
+        "b": "SWEET_BERRIES",
+        "a": "APPLE"
+      },
+      "craft_amount": 1
+    }
+  },
+  {
+    "uniqueID": "food_Chocolate_Apple",
+    "displayName": "&6Chocolate Apple",
+    "description": [
+      "&8แอปเปิ้ลเคลือบช็อกโกแลต!",
+      "&7ขมละมุน หวานกำลังดี",
+      "&eEffects:",
+      "&aSaturation:&9 +6",
+      "&aHunger:&9 +5",
+      "&aHealth:&9 +2"
+    ],
+    "instantEat": false,
+    "foodMaterial": "GOLDEN_APPLE",
+    "headTexture": "",
+    "saturation": 6,
+    "hunger": 5,
+    "health": 2,
+    "craftable": true,
+    "potionEffects": {
+      "DAMAGE_RESISTANCE": {
+        "duration": 800,
+        "amplifier": 0
+      }
+    },
+    "recipe": {
+      "shape": [
+        " c ",
+        "cac",
+        " c "
+      ],
+      "materials": {
+        "c": "COCOA_BEANS",
+        "a": "APPLE"
+      },
+      "craft_amount": 1
+    }
+  },
+  {
+    "uniqueID": "food_Chorus_Apple",
+    "displayName": "&5Chorus Apple",
+    "description": [
+      "&dแอปเปิ้ลเคลือบผลโครัส!",
+      "&7กัดแล้ววาร์ป! สุดแฟนตาซี~",
+      "",
+      "&eEffects:",
+      "&aSaturation:&9 +3",
+      "&aHunger:&9 +3",
+      "&aHealth:&9 +1"
+    ],
+    "instantEat": false,
+    "foodMaterial": "GOLDEN_APPLE",
+    "headTexture": "",
+    "saturation": 4,
+    "hunger": 4,
+    "health": 1,
+    "craftable": true,
+    "potionEffects": {
+      "LUCK": {
+        "duration": 800,
+        "amplifier": 0
+      }
+    },
+    "recipe": {
+      "shape": [
+        " c ",
+        " a ",
+        "   "
+      ],
+      "materials": {
+        "c": "CHORUS_FRUIT",
+        "a": "APPLE"
+      },
+      "craft_amount": 1
+    }
+  },
+  {
+    "uniqueID": "food_Spaghetti_Base",
+    "displayName": "&cSpaghetti",
+    "description": [
+      "&6สปาเกตตี้ซอสมะเขือเทศเข้มข้น!",
+      "&7หอม หวาน เค็ม เผ็ดเล็กๆ",
+      "",
+      "&eEffects:",
+      "&aSaturation:&9 +7",
+      "&aHunger:&9 +6",
+      "&aHealth:&9 +2"
+    ],
+    "instantEat": false,
+    "foodMaterial": "PLAYER_HEAD",
+    "headTexture": "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzAzNzY5YWI4MGU2NWEzODFmZTkwZjljZDRjNGI0N2M1N2Y2MmRjMzJkODIyZWQ0MzFlMzIyMjhiZWUxM2U3MSJ9fX0=",
+    "saturation": 7,
+    "hunger": 6,
+    "health": 2,
+    "craftable": true,
+    "potionEffects": {
+      "SPEED": {
+        "duration": 600,
+        "amplifier": 0
+      },
+      "REGENERATION": {
+        "duration": 800,
+        "amplifier": 0
+      }
+    },
+    "recipe": {
+      "shape": [
+        " d ",
+        "tbo",
+        " r "
+      ],
+      "materials": {
+        "r": "BOWL",
+        "t": "BEETROOT",
+        "b": "BROWN_MUSHROOM",
+        "o": "SWEET_BERRIES",
+        "d": "WHEAT"
+      },
+      "craft_amount": 1
+    }
+  },
+  {
+    "uniqueID": "food_Spaghetti_Pork",
+    "displayName": "&cSpaghetti with Pork",
+    "description": [
+      "&6สปาเกตตี้หมูเข้มข้น!",
+      "&7หมูนุ่มเต็มคำ รสชาติกลมกล่อม",
+      "",
+      "&eEffects:",
+      "&aSaturation:&9 +8",
+      "&aHunger:&9 +7",
+      "&aHealth:&9 +3"
+    ],
+    "instantEat": false,
+    "foodMaterial": "PLAYER_HEAD",
+    "headTexture": "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2M0NmJlYzVhMjVlM2RlNmQxZTY1MWM3NWI1ZWU4YzQxZDQ2NmIyMjdkM2ZhMjdkMWYyODk5NTRjMTQ5NyJ9fX0=",
+    "saturation": 8,
+    "hunger": 7,
+    "health": 3,
+    "craftable": true,
+    "potionEffects": {
+      "REGENERATION": {
+        "duration": 800,
+        "amplifier": 0
+      },
+      "SPEED": {
+        "duration": 800,
+        "amplifier": 0
+      }
+    },
+    "recipe": {
+      "shape": [
+        " d ",
+        "tmo",
+        " r "
+      ],
+      "materials": {
+        "r": "BOWL",
+        "t": "BEETROOT",
+        "m": "COOKED_PORKCHOP",
+        "o": "SWEET_BERRIES",
+        "d": "WHEAT"
+      },
+      "craft_amount": 1
+    }
+  },
+  {
+    "uniqueID": "food_Spaghetti_Chicken",
+    "displayName": "&cSpaghetti with Chicken",
+    "description": [
+      "&6สปาเกตตี้ไก่เข้มข้น!",
+      "&7นุ่มเต็มคำ รสชาติกลมกล่อม",
+      "",
+      "&eEffects:",
+      "&aSaturation:&9 +8",
+      "&aHunger:&9 +7",
+      "&aHealth:&9 +3"
+    ],
+    "instantEat": false,
+    "foodMaterial": "PLAYER_HEAD",
+    "headTexture": "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2M0NmJlYzVhMjVlM2RlNmQxZTY1MWM3NWI1ZWU4YzQxZDQ2NmIyMjdkM2ZhMjdkMWYyODk5NTRjMTQ5NyJ9fX0=",
+    "saturation": 8,
+    "hunger": 7,
+    "health": 3,
+    "craftable": true,
+    "potionEffects": {
+      "REGENERATION": {
+        "duration": 800,
+        "amplifier": 0
+      },
+      "SPEED": {
+        "duration": 800,
+        "amplifier": 0
+      }
+    },
+    "recipe": {
+      "shape": [
+        " d ",
+        "tmo",
+        " r "
+      ],
+      "materials": {
+        "r": "BOWL",
+        "t": "BEETROOT",
+        "o": "SWEET_BERRIES",
+        "d": "WHEAT",
+        "m": "COOKED_CHICKEN"
+      },
+      "craft_amount": 1
+    }
+  },
+  {
+    "uniqueID": "food_Spaghetti_Mutton",
+    "displayName": "&cSpaghetti with Mutton",
+    "description": [
+      "&6สปาเกตตี้แกะเข้มข้น!",
+      "&7นุ่มเต็มคำ รสชาติกลมกล่อม",
+      "",
+      "&eEffects:",
+      "&aSaturation:&9 +8",
+      "&aHunger:&9 +7",
+      "&aHealth:&9 +3"
+    ],
+    "instantEat": false,
+    "foodMaterial": "PLAYER_HEAD",
+    "headTexture": "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2M0NmJlYzVhMjVlM2RlNmQxZTY1MWM3NWI1ZWU4YzQxZDQ2NmIyMjdkM2ZhMjdkMWYyODk5NTRjMTQ5NyJ9fX0=",
+    "saturation": 8,
+    "hunger": 7,
+    "health": 3,
+    "craftable": true,
+    "potionEffects": {
+      "REGENERATION": {
+        "duration": 800,
+        "amplifier": 0
+      },
+      "SPEED": {
+        "duration": 800,
+        "amplifier": 0
+      }
+    },
+    "recipe": {
+      "shape": [
+        " d ",
+        "tmo",
+        " r "
+      ],
+      "materials": {
+        "r": "BOWL",
+        "t": "BEETROOT",
+        "o": "SWEET_BERRIES",
+        "d": "WHEAT",
+        "m": "COOKED_MUTTON"
+      },
+      "craft_amount": 1
+    }
+  },
+  {
+    "uniqueID": "food_Spaghetti_Rabbit",
+    "displayName": "&cSpaghetti with Rabbit",
+    "description": [
+      "&6สปาเกตตี้แกะเข้มข้น!",
+      "&7นุ่มเต็มคำ รสชาติกลมกล่อม",
+      "",
+      "&eEffects:",
+      "&aSaturation:&9 +8",
+      "&aHunger:&9 +7",
+      "&aHealth:&9 +3"
+    ],
+    "instantEat": false,
+    "foodMaterial": "PLAYER_HEAD",
+    "headTexture": "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2M0NmJlYzVhMjVlM2RlNmQxZTY1MWM3NWI1ZWU4YzQxZDQ2NmIyMjdkM2ZhMjdkMWYyODk5NTRjMTQ5NyJ9fX0=",
+    "saturation": 8,
+    "hunger": 7,
+    "health": 3,
+    "craftable": true,
+    "potionEffects": {
+      "REGENERATION": {
+        "duration": 800,
+        "amplifier": 0
+      },
+      "SPEED": {
+        "duration": 800,
+        "amplifier": 0
+      }
+    },
+    "recipe": {
+      "shape": [
+        " d ",
+        "tmo",
+        " r "
+      ],
+      "materials": {
+        "r": "BOWL",
+        "t": "BEETROOT",
+        "o": "SWEET_BERRIES",
+        "d": "WHEAT",
+        "m": "COOKED_RABBIT"
+      },
+      "craft_amount": 1
+    }
+  },
+  {
+    "uniqueID": "food_IceCream_Vanilla",
+    "displayName": "&fVanilla Ice Cream",
+    "description": [
+      "&fไอศกรีมวานิลลาหอมหวาน!",
+      "&7เย็นสดชื่นคลายร้อน",
+      "",
+      "&eEffects:",
+      "&aSaturation:&9 +4",
+      "&aHunger:&9 +5",
+      "&aHealth:&9 +1.5"
+    ],
+    "instantEat": true,
+    "foodMaterial": "PLAYER_HEAD",
+    "headTexture": "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYTI4NGRhY2FkYzI3NmUwMGQ4M2EzMDVkODA5NmZiYzJmYjRiYWEzNTE1NjE2MzE3YmFiZDdhYTRhNjZkYTFiMCJ9fX0=",
+    "saturation": 4,
+    "hunger": 4,
+    "health": 1.5,
+    "craftable": true,
+    "potionEffects": {},
+    "recipe": {
+      "shape": [
+        " s ",
+        "mil",
+        " b "
+      ],
+      "materials": {
+        "s": "SUGAR",
+        "m": "MILK_BUCKET",
+        "i": "SNOWBALL",
+        "b": "BOWL",
+        "l": "WHITE_DYE"
+      },
+      "craft_amount": 1
+    }
+  },
+  {
+    "uniqueID": "food_IceCream_Chocolate",
+    "displayName": "&6Chocolate Ice Cream",
+    "description": [
+      "&6ไอศกรีมช็อกโกแลตเข้มข้น!",
+      "&7กลมกล่อมละมุนลิ้น",
+      "",
+      "&eEffects:",
+      "&aSaturation:&9 +6",
+      "&aHunger:&9 +6",
+      "&aHealth:&9 +2.5"
+    ],
+    "instantEat": true,
+    "foodMaterial": "PLAYER_HEAD",
+    "headTexture": "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGVhZjI5NWYzYmUyZGI3MjkzNTMzNjZiN2U2ZDUwMGQ3MWRjMGJmMmI4ZjczYTMwNzcyOTg3MGM3NjNkZmQyZSJ9fX0=",
+    "saturation": 6,
+    "hunger": 6,
+    "health": 2.5,
+    "craftable": true,
+    "potionEffects": {},
+    "recipe": {
+      "shape": [
+        " s ",
+        "mil",
+        " b "
+      ],
+      "materials": {
+        "s": "SUGAR",
+        "m": "MILK_BUCKET",
+        "i": "SNOWBALL",
+        "b": "BOWL",
+        "l": "BROWN_DYE"
+      },
+      "craft_amount": 1
+    }
+  },
+  {
+    "uniqueID": "food_IceCream_Mint",
+    "displayName": "&6Mint Ice Cream",
+    "description": [
+      "&6ไอศกรีมมิ้นเข้มข้น!",
+      "&7กลมกล่อมละมุนลิ้น",
+      "",
+      "&eEffects:",
+      "&aSaturation:&9 +6",
+      "&aHunger:&9 +6",
+      "&aHealth:&9 +2.5"
+    ],
+    "instantEat": true,
+    "foodMaterial": "PLAYER_HEAD",
+    "headTexture": "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYWVjN2E3NTZlZjVjYTU0NzgwNjcyMmI2NDA0YWFhNGIyMGFmOWI1OWFmMzI1ZjYwYzAxYTIxMzlkMGZmZjZhMiJ9fX0=",
+    "saturation": 6,
+    "hunger": 6,
+    "health": 2.5,
+    "craftable": true,
+    "potionEffects": {},
+    "recipe": {
+      "shape": [
+        " s ",
+        "mil",
+        " b "
+      ],
+      "materials": {
+        "s": "SUGAR",
+        "m": "MILK_BUCKET",
+        "i": "SNOWBALL",
+        "b": "BOWL",
+        "l": "LIGHT_BLUE_DYE"
+      },
+      "craft_amount": 1
+    }
+  },
+  {
+    "uniqueID": "food_IceCream_Lemon",
+    "displayName": "&6Lemon Ice Cream",
+    "description": [
+      "&6ไอศกรีมเลม่อนเข้มข้น!",
+      "&7กลมกล่อมละมุนลิ้น",
+      "",
+      "&eEffects:",
+      "&aSaturation:&9 +6",
+      "&aHunger:&9 +6",
+      "&aHealth:&9 +2.5"
+    ],
+    "instantEat": true,
+    "foodMaterial": "PLAYER_HEAD",
+    "headTexture": "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDI2ZTgwNGIyYjNkYWVkNmNjMzRhNGRkZjk4YjM0MTdlOWQxMTBhMmQ4MTVkMzVmODIwNjViOWU3ZDdmYjg2MyJ9fX0=",
+    "saturation": 6,
+    "hunger": 6,
+    "health": 2.5,
+    "craftable": true,
+    "potionEffects": {},
+    "recipe": {
+      "shape": [
+        " s ",
+        "mil",
+        " b "
+      ],
+      "materials": {
+        "s": "SUGAR",
+        "m": "MILK_BUCKET",
+        "i": "SNOWBALL",
+        "b": "BOWL",
+        "l": "LIME_DYE"
+      },
+      "craft_amount": 1
+    }
+  },
+  {
+    "uniqueID": "food_IceCream_Strawberry",
+    "displayName": "&6Strawberry Ice Cream",
+    "description": [
+      "&6ไอศกรีมสตอเบอร์รี่เข้มข้น!",
+      "&7กลมกล่อมละมุนลิ้น",
+      "",
+      "&eEffects:",
+      "&aSaturation:&9 +6",
+      "&aHunger:&9 +6",
+      "&aHealth:&9 +2.5"
+    ],
+    "instantEat": true,
+    "foodMaterial": "PLAYER_HEAD",
+    "headTexture": "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZTQxNjIyZDkzNWU1MDEyN2ZhOTk0OGY2M2YyYWM1NDVlNjAwZmNjNDgyYjg5NTU0NmQ3M2E4Y2M1MTVjNjAxOCJ9fX0=",
+    "saturation": 6,
+    "hunger": 6,
+    "health": 2.5,
+    "craftable": true,
+    "potionEffects": {},
+    "recipe": {
+      "shape": [
+        " s ",
+        "mil",
+        " b "
+      ],
+      "materials": {
+        "s": "SUGAR",
+        "m": "MILK_BUCKET",
+        "i": "SNOWBALL",
+        "b": "BOWL",
+        "l": "RED_DYE"
+      },
+      "craft_amount": 1
+    }
+  },
+  {
+	  "uniqueID": "PenguinStraw",
+	  "displayName": "&bPenguinStraw",
+	  "description": [
+		"&c แพนกวิ้นหมวกฟาง",
+		"&7 ไม่ใช่ของกินนะถึงแม้จะกดกินได้",
+		"",
+		"&e ไม่มี eEffects"
+	  ],
+	  "instantEat": false,
+	  "foodMaterial": "PLAYER_HEAD",
+	  "headTexture": "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTA3MDE5OTFmMTZiNTdiMDAwM2MyOWFiNWU0ZThmYmZkYjUyYmYxZjBjOGEzNzVlMDUxZDRkNmY1NDNmOTk0In19fQ==",
+	  "saturation": 0,
+	  "hunger": 0,
+	  "health": 0,
+	  "craftable": true,
+	  "potionEffects": {
+		"SPEED": {
+		  "duration": 600,
+		  "amplifier": 0
+		}
+	  },
+	  "recipe": {
+		"shape": [
+		  "fff",
+		  "f f",
+		  "   "
+		],
+		"materials": {
+		  "f": "WHEAT"
+		},
+		"craft_amount": 1
+	  }
+	}
+]
