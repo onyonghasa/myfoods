@@ -2,282 +2,2520 @@
 <html lang="th">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minecraft Food Recipe Manager</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f5f5f5;
-            color: #333;
-        }
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <title>Recipe management system Myfoods</title>
+  <style>
+    :root {
+      --primary-color: #4CAF50;
+      --secondary-color: #f1c40f;
+      --danger-color: #e74c3c;
+      --light-color: #f9f9f9;
+      --dark-color: #333;
+      --border-color: #ddd;
+      --success-color: #339e4c;
+      --error-color: #f8d7da;
+      --info-color: #3498db;
+      --warning-color: #f39c12;
+    }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
+    /* เพิ่มสไตล์สำหรับข้อความแจ้งเตือน */
+    .error {
+      color: #e74c3c;
+      /* สีแดง */
+      background-color: #f8d7da;
+      /* พื้นหลังแดงอ่อน */
+      padding: 5px 10px;
+      border-radius: 4px;
+      margin-top: 5px;
+      display: inline-block;
+      border: 1px solid #f5c6cb;
+    }
 
-        header {
-            background-color: #4CAF50;
-            color: white;
-            padding: 20px;
-            text-align: center;
-            border-radius: 5px;
-            margin-bottom: 20px;
-        }
+    .success {
+      color: #28a745;
+      /* สีเขียว */
+      background-color: #d4edda;
+      /* พื้นหลังเขียวอ่อน */
+      padding: 5px 10px;
+      border-radius: 4px;
+      margin-top: 5px;
+      display: inline-block;
+      border: 1px solid #c3e6cb;
+    }
 
-        h1 {
-            margin: 0;
-            font-size: 2em;
-        }
+    /* ปุ่ม Back to Top */
+    .back-to-top {
+      position: fixed;
+      bottom: 30px;
+      left: 30px;
+      /* เปลี่ยนจาก right เป็น left */
+      background-color: var(--primary-color);
+      color: white;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      cursor: pointer;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      z-index: 999;
+    }
 
-        .menu-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: center;
-        }
+    .back-to-top.show {
+      opacity: 1;
+      visibility: visible;
+    }
 
-        .menu-card {
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 300px;
-            overflow: hidden;
-            transition: transform 0.3s;
-        }
+    .back-to-top:hover {
+      background-color: #45a049;
+      transform: translateY(-3px);
+    }
 
-        .menu-card:hover {
-            transform: translateY(-5px);
-        }
+    /* Base Styles */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 20px;
+      background: var(--light-color);
+      color: var(--dark-color);
+      line-height: 1.6;
+    }
 
-        .menu-image {
-            height: 200px;
-            background-color: #4CAF50;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 2em;
-        }
+    h1,
+    h2,
+    h3 {
+      color: var(--primary-color);
+      margin-top: 0;
+    }
 
-        .menu-content {
-            padding: 20px;
-        }
+    /* Layout */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
 
-        .menu-title {
-            margin: 0 0 10px 0;
-            color: #4CAF50;
-        }
+    .section {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
 
-        .menu-description {
-            margin: 0 0 15px 0;
-            color: #666;
-        }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 5px;
+    }
 
-        .btn {
-            display: inline-block;
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 15px;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
+    /* Form Elements */
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
 
-        .btn:hover {
-            background-color: #45a049;
-        }
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
 
-        .instructions {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin-top: 30px;
-        }
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
 
-        .plugin-commands {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin-top: 20px;
-        }
+    /* Buttons */
+    button {
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      margin: 5px 0;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
 
-        .command-block {
-            background: #f0f0f0;
-            padding: 15px;
-            border-radius: 5px;
-            margin: 10px 0;
-            font-family: monospace;
-        }
-        .project-info {
-            background-color: #f4f7fa;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-            font-family: 'Arial', sans-serif;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-        }
+    button.savetofile {
+      background-color: #e74c3c;
+    }
+    
+    button.upload{
+      background-color: #339e4c;
+    }
 
-        .project-info h3 {
-            font-size: 24px;
-            font-weight: bold;
-            color: #2c3e50;
-            margin-bottom: 15px;
-            text-align: center;
-        }
+    button:hover {
+      background-color: #45a049;
+    }
 
-        .project-info p {
-            font-size: 16px;
-            color: #34495e;
-            line-height: 1.6;
-            text-align: justify;
-            margin-bottom: 15px;
-        }
+    button.small {
+      padding: 5px 10px;
+      font-size: 0.9em;
+    }
 
-        .project-info p:last-child {
-            margin-bottom: 0;
-        }
+    button.danger {
+      background-color: var(--danger-color);
+    }
 
-        .project-info:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
-        }
+    button.danger:hover {
+      background-color: #c0392b;
+    }
 
-        .project-info p em {
-            font-style: italic;
-            color: #e67e22;
-        }
+    button.secondary {
+      background-color: var(--secondary-color);
+      color: #000;
+    }
 
-            @media (max-width: 768px) {
-                .menu-container {
-                    flex-direction: column;
-                    align-items: center;
-                }
+    button.reload {
+      background-color: var(--info-color);
+    }
 
-                .menu-card {
-                    width: 90%;
-                }
-            }
+    button.secondary:hover {
+      background-color: #f39c12;
+    }
 
-    </style>
+    /* Food List & Cards */
+    .food-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .food-card {
+      background: white;
+      border-radius: 10px;
+      padding: 15px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .food-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .food-card-content {
+      flex: 1;
+    }
+
+    .food-card-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    /* Status Indicators */
+    .badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 0.8em;
+      background-color: var(--secondary-color);
+      color: #000;
+    }
+
+    .craft-status {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.8em;
+    }
+
+    .craft-status.active {
+      background-color: var(--success-color);
+      color: #ffffff;
+    }
+
+    .craft-status.inactive {
+      background-color: var(--error-color);
+      color: #721c24;
+    }
+
+    .craft-disabled-note {
+      color: var(--danger-color);
+      background-color: var(--error-color);
+      padding: 5px;
+      border-radius: 4px;
+      font-size: 0.9em;
+    }
+
+    /* Recipe Preview */
+    .recipe-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 5px;
+      margin-bottom: 15px;
+    }
+
+    .recipe-slot-select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      background-color: white;
+      cursor: pointer;
+    }
+
+    .recipe-slot-select:hover {
+      border-color: var(--primary-color);
+    }
+
+    .recipe-preview {
+      margin-top: 20px;
+      border: 1px solid var(--border-color);
+      padding: 15px;
+      border-radius: 8px;
+      background-color: #f5f5f5;
+    }
+
+    .recipe-preview-columns {
+      display: flex;
+      gap: 20px;
+    }
+
+    .recipe-preview-left {
+      flex: 1;
+    }
+
+    .recipe-preview-right {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    @media (max-width: 768px) {
+      .recipe-preview-columns {
+        flex-direction: column;
+      }
+    }
+
+    .recipe-grid-preview {
+      display: grid;
+      grid-template-columns: repeat(3, 80px);
+      gap: 5px;
+      margin-top: 10px;
+    }
+
+    .recipe-slot {
+      width: 80px;
+      height: 80px;
+      border: 1px solid var(--border-color);
+      background-color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      padding: 5px;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+
+    .recipe-slot.empty {
+      background-color: transparent;
+      border: 1px dashed var(--border-color);
+    }
+
+    .recipe-slot-content {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 12px;
+      word-break: break-word;
+    }
+
+    .recipe-slot-char {
+      font-weight: bold;
+      font-size: 16px;
+      margin-bottom: 3px;
+    }
+
+    .recipe-slot-material {
+      font-size: 10px;
+      line-height: 1.2;
+    }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      margin-bottom: 20px;
+    }
+
+    .tab {
+      padding: 10px 20px;
+      cursor: pointer;
+      background-color: #eee;
+      border: 1px solid var(--border-color);
+      border-bottom: none;
+      border-radius: 5px 5px 0 0;
+      margin-right: 5px;
+    }
+
+    .tab.active {
+      background-color: white;
+      border-bottom: 1px solid white;
+      margin-bottom: -1px;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* Modals */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-content {
+      background-color: #fefefe;
+      margin: 5% auto;
+      padding: 20px;
+      border-radius: 8px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 800px;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .close:hover {
+      color: black;
+    }
+
+    /* Food Detail */
+    .food-detail-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      /* Keep equal columns */
+      gap: 20px;
+      width: 100%;
+    }
+
+    .food-detail-left {
+      min-width: 0;
+      /* Prevent growing beyond allocated space */
+      padding-right: 15px;
+      border-right: 1px solid var(--border-color);
+    }
+
+    .food-detail-right {
+      min-width: 0;
+      /* Prevent growing beyond allocated space */
+      padding-left: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* Effects */
+    .effects-list {
+      margin-top: 10px;
+    }
+
+    .effects-list ul {
+      padding-left: 20px;
+    }
+
+    /* Crafting */
+    .crafting-section {
+      margin-top: 20px;
+    }
+
+    .crafting-title {
+      margin-bottom: 10px;
+    }
+
+    /* Toast Notifications */
+    .toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 15px;
+      border-radius: 5px;
+      color: white;
+      z-index: 1001;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      animation: toastSlideIn 0.5s, toastFadeOut 0.5s 4.5s;
+      display: flex;
+      align-items: center;
+      max-width: 300px;
+    }
+
+    .toast-success {
+      background-color: var(--primary-color);
+    }
+
+    .toast-error {
+      background-color: var(--danger-color);
+    }
+
+    .toast-info {
+      background-color: var(--info-color);
+    }
+
+    .toast-warning {
+      background-color: var(--warning-color);
+    }
+
+    .toast-close {
+      margin-left: 10px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .toast-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      margin-top: 10px;
+    }
+
+    /* Utility Classes */
+    .hidden {
+      display: none;
+    }
+
+    .no-data {
+      text-align: center;
+      color: #777;
+      padding: 20px;
+    }
+
+    /* Animations */
+    @keyframes toastSlideIn {
+      from {
+        transform: translateX(100%);
+      }
+
+      to {
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes toastFadeOut {
+      from {
+        opacity: 1;
+      }
+
+      to {
+        opacity: 0;
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .food-list {
+        grid-template-columns: 1fr;
+      }
+
+      .modal-content {
+        width: 95%;
+      }
+
+      .food-detail-container {
+        grid-template-columns: 1fr;
+      }
+
+      .food-detail-left {
+        padding-right: 0;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 15px;
+        margin-bottom: 15px;
+      }
+
+      .food-detail-right {
+        padding-left: 0;
+      }
+    }
+
+    .material-input-group {
+      margin-bottom: 15px;
+    }
+
+    .material-input-row {
+      display: flex;
+      align-items: center;
+      margin-top: 5px;
+    }
+
+    .material-item {
+      transition: all 0.2s ease;
+    }
+
+    .material-item:hover {
+      background-color: #eee !important;
+    }
+
+    .json-section {
+      border: 1px solid var(--border-color);
+      background-color: #f8f9fa;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.9em;
+      line-height: 1.4;
+      overflow-x: auto;
+      flex-grow: 1;
+      /* Take remaining space */
+      min-height: 200px;
+      /* Minimum height */
+      max-height: 300px;
+      /* Maximum height */
+      box-sizing: border-box;
+    }
+
+    .json-section pre {
+      margin: 0;
+      padding: 10px;
+      white-space: pre-wrap;
+      word-break: break-all;
+      /* Break long words */
+      overflow-wrap: break-word;
+    }
+
+    .json-section h3 {
+      margin-top: 0;
+      color: var(--dark-color);
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 5px;
+      position: sticky;
+      top: 0;
+      background-color: #f8f9fa;
+      z-index: 1;
+    }
+    .toast-confirm {
+      background-color: var(--danger-color);
+    }
+  </style>
 </head>
 
 <body>
-    <div class="container">
-        <header>
-            <h1>Minecraft Food Recipe Manager</h1>
-            <p>เครื่องมือจัดการสูตรอาหาร Myfoods Plugin Minecraft 1.21.4</p>
-        </header>
+  <div class="container">
+    <h1>Recipe management system Myfoods, Minecraft 1.21.4</h1>
 
-        <div class="menu-container">
-            <div class="menu-card">
-                <div class="menu-image">📝</div>
-                <div class="menu-content">
-                    <h2 class="menu-title">Recipe Management</h2>
-                    <p class="menu-description">ระบบจัดการสูตรอาหาร Minecraft สำหรับผู้ดูแลระบบ</p>
-                    <a href="indexdev.html" class="btn">เปิดตัวจัดการ</a>
-                </div>
-            </div>
+    <button class="back-to-top" title="Back to top">↑</button>
 
-            <div class="menu-card">
-                <div class="menu-image">👀</div>
-                <div class="menu-content">
-                    <h2 class="menu-title">Recipe Preview</h2>
-                    <p class="menu-description">ตัวอย่างแสดงผลสูตรอาหารสำหรับผู้เล่น</p>
-                    <a href="indexlitepreview.html" class="btn">เปิดตัวอย่าง</a>
-                </div>
-            </div>
-        </div>
-
-        
-        <div class="instructions">
-            <h2>Usage Instructions</h2>
-            <h3>For Administrators:</h3>
-            <ol>
-                <li>Use the "Recipe Management" menu to add/edit/delete food recipes.</li>
-                <li>Fill out the food information form completely.</li>
-                <li>Define the crafting recipe and required ingredients.</li>
-                <li>Click "Update file datafoods.json" to save the changes.</li>
-                <li>Upload the datafoods.json file to your server.</li>
-                <li>You can place the file <strong>indexlitepreview.html</strong> on your host along with the
-                    <strong>datafoods.json</strong> file so players can view the food list.</li>
-            </ol>
-
-            <h3>For Players:</h3>
-            <ol>
-                <li>Use the "Recipe Preview" menu to view all food recipes.</li>
-                <li>Click on a food item to see details and the crafting recipe.</li>
-            </ol>
-        </div>
-
-        <div class="instructions">
-            <h2>คำแนะนำการใช้งาน</h2>
-            <h3>สำหรับผู้ดูแลระบบ:</h3>
-            <ol>
-                <li>ใช้เมนู "Recipe Management" เพื่อเพิ่ม/แก้ไข/ลบ สูตรอาหาร</li>
-                <li>กรอกข้อมูลอาหารในฟอร์มให้ครบถ้วน</li>
-                <li>กำหนดสูตรคราฟต์และวัตถุดิบที่ต้องการ</li>
-                <li>คลิก "Update file datafoods.json" เพื่อบันทึกการเปลี่ยนแปลง</li>
-                <li>อัพโหลดไฟล์ datafoods.json ไปยังเซิร์ฟเวอร์ของคุณ</li>
-                <li>คุณสามารถนำไฟล์ <strong>indexlitepreview.html</strong> ไปแปะที่โฮสของคุณพร้อมกับไฟล์
-                    <strong>datafoods.json</strong> เพื่อให้ผู้เล่นดูรายการอาหารได้</li>
-            </ol>
-
-            <h3>สำหรับผู้เล่น:</h3>
-            <ol>
-                <li>ใช้เมนู "Recipe Preview" เพื่อดูสูตรอาหารทั้งหมด</li>
-                <li>คลิกที่อาหารเพื่อดูรายละเอียดและสูตรคราฟต์</li>
-            </ol>
-        </div>
-
-
-        <div class="plugin-commands">
-            <h2>Commands (คำสั่งปลั๊กอิน)</h2>
-
-            <h3>Basic commands (คำสั่งพื้นฐาน):</h3>
-            <div class="command-block">
-                /myfoods  - Show information about MyFoods<br>
-            </div>
-
-            <h3>Commands for administrators คำสั่งสำหรับผู้ดูแลระบบ:</h3>
-            <div class="command-block">
-                /myfoodsmenu - Show all menu menu and link management<br>
-                /myfoodsgive [player] [foodsnamecustom] [amount] - Give foods custom to player<br>
-                /myfoodsreload - Reload Foods<br>
-                /myfoodsdebug - Debug<br>
-            </div>
-
-            <h3>คำสั่งอนุญาต (Permissions):</h3>
-            <div class="command-block">
-                myfoods.menu - Allows Open web management menu (default: op)<br>
-                myfoods.give - Allows give foods player (default: op)<br>
-                myfoods.reload - Allows reloading the MyFoods configuration (default: op)<br>
-                myfoods.debug - Allows toggling debug mode (default: op)<br>
-            </div>
-        </div>
-
-        <div class="project-info">
-            <h3>About เกี่ยวกับปลั๊กอินนี้</h3>
-            <p>ปลั๊กอินนี้ฉันสร้างขึ้นเพื่อเล่นกับกลุ่มเพื่อนในช่วงแรก เนื่องจากอยากได้เมนูอาหารใหม่ๆ ในเกม
-                ระหว่างพัฒนาฉันใช้ภาษาไทยในการอธิบายและใส่ข้อมูลต่างๆ เพราะสะดวกและคุ้นเคย
-                แต่เมื่อเห็นว่าโปรเจคนี้น่าสนใจเลยตัดสินใจเผยแพร่ให้เพื่อนๆ ได้ลองใช้ โดยที่ฉันต้องแปลภาษาไทยเป็นภาษาอังกฤษ
-                แต่เนื่องจากฉันไม่เก่งภาษาอังกฤษจึงใช้โปรแกรมแปลภาษา หากมีการแปลผิดพลาดหรือแปลแปลกๆ โปรดเห็นใจทีนะคะ♥</p>
-        
-            <p>This plugin was initially created for fun with my friends because I wanted new food menus in the game. During
-                development, I used Thai to describe and add information because it's more convenient for me. However, after
-                realizing the project could be interesting to others, I decided to share it. I translated everything from Thai
-                to English, but since I'm not fluent in English, I used a translation tool. Please understand if there are any
-                mistakes or awkward translations♥.</p>
-        </div>
-
+    <div class="tabs">
+      <div class="tab active" onclick="openTab('view-tab')">Food menu [รายการอาหาร]</div>
+      <div class="tab" onclick="openTab('add-tab')">Add new recipes [เพิ่มสูตรอาหารใหม่]</div>
     </div>
-</body>
 
-</html>
+    <div id="view-tab" class="tab-content active">
+      <div class="section">
+        <h2>All food items [รายการอาหารทั้งหมด]</h2>
+        <button onclick="loadMaterials()" class="reload" title="โหลดข้อมูลวัสดุใหม่">
+          <i class="fas fa-sync-alt"></i>Reload food and materials list [รีโหลดรายการอาหารและวัสดุ]
+        </button>
+        <label>IMPORT datafoods.json {JSON}</label>
+        <input type="file" id="jsonLoader" accept="application/json">
+        <button onclick="loadJsonFile()" class="upload">
+          <i class="fas fa-download"></i>Import file datafoods.json [นำเข้าไฟล์]
+        </button>
+        <div class="action-buttons">
+          <button onclick="saveToFile()" class="savetofile">
+            <i class="fas fa-save"></i> Update file datafoods.json [อัพเดทไฟล์]
+          </button>
+          <button onclick="exportToFile()" class="secondary">
+            <i class="fas fa-file-export"></i> Export new file [ส่งออกไฟล์ใหม่]
+          </button>
+        </div>
+        <div class="food-list" id="foodList"></div>
+      </div>
+    </div>
+
+    <div id="add-tab" class="tab-content">
+      <div class="section">
+        <h2>Add new recipes [เพิ่มสูตรอาหารใหม่]</h2>
+        <button onclick="loadMaterials()" class="reload" title="โหลดข้อมูลวัสดุใหม่">
+          <i class="fas fa-sync-alt"></i> Reload food and materials list [รีโหลดรายการอาหารและวัสดุ]
+        </button>
+
+        <!-- จะถูกเติมโดย JavaScript<label>โหลดไฟล์ JSON</label>
+        <input type="file" id="jsonLoader" accept="application/json">
+        <button onclick="loadJsonFile()" class="secondary">โหลดไฟล์</button> -->
+      </div>
+
+      <div class="section">
+        <label>UniqueID</label>
+        <input type="text" id="uniqueID" oninput="validateUniqueID(this)" placeholder="ใช้ได้เฉพาะ a-z, A-Z, 0-9 และ _">
+        <div id="uniqueIDWarning" class="error" style="display: none;">
+          <i class="fas fa-exclamation-circle"></i> This uniqueID already exists.!
+        </div>
+        <div id="uniqueIDSuccess" class="success" style="display: none;">
+          <i class="fas fa-check-circle"></i> This uniqueID can be used.
+        </div>
+
+        <label>DisplayName [ชื่อที่แสดง]</label>
+        <input type="text" id="displayName" placeholder="เช่น &6Magic Golden Apple">
+
+        <label>Description [คำอธิบาย] </label>
+        <textarea id="description"
+          placeholder="แต่ละบรรทัดจะแสดงเป็นบรรทัดใหม่ในเกม เช่น [บรรทัด 1] &cแอปเปิ้ลเคลือบน้ำตาล! [บรรทัด 2] &7หวานกรุบ กัดแล้วเพลิน"></textarea>
+
+        <label>InstantEat [กินทันที]</label>
+        <select id="instantEat">
+          <option value="false">false (กินแบบปกติ)</option>
+          <option value="true">true (กินทันที)</option>
+        </select>
+
+        <label>FoodMaterial [วัสดุอาหาร]</label>
+        <select id="foodMaterial" onchange="handleMaterialChange()">
+          <option value="">-- Select --</option>
+          <!-- จะถูกเติมโดย JavaScript -->
+        </select>
+
+
+        <div id="headTextureField" class="hidden">
+          <label>Texture Head (headTexture) <a href="https://minecraft-heads.com/custom-heads/" target="_blank">Recommend: minecraft-heads.com</a></label>
+          <input type="text" id="headTexture" placeholder="Base64 texture value">
+        </div>
+
+        <div id="outputMaterialField" class="hidden">
+          <label>OutputFoodMaterial [วัสดุที่ได้หลังใช้] Ex: POTION > WHITE POTION</label>
+          <select id="outputFoodMaterial" onchange="handleOutputMaterialChange()">
+            <option value="">-- None --</option>
+            <!-- จะถูกเติมโดย JavaScript -->
+          </select>
+        </div>
+
+        <div id="potionColorField" class="hidden">
+          <label>Potion Color [สีของโพชั่น]</label>
+          <select id="potionColorType" onchange="handlePotionColorTypeChange()">
+            <option value="basic">Basic colors [สีพื้นฐาน]</option>
+            <option value="custom">Custom colors [สีกำหนดเอง]</option>
+          </select>
+
+          <div id="basicColorSelection">
+            <select id="potionColor">
+              <option value="">-- Select --</option>
+              <option value="WHITE">WHITE [ขาว]</option>
+              <option value="RED">RED [แดง]</option>
+              <option value="BLUE" selected>BLUE [น้ำเงิน]</option>
+              <option value="GREEN">GREEN [เขียว]</option>
+              <option value="YELLOW">YELLOW [เหลือง]</option>
+              <option value="PURPLE">PURPLE [ม่วง]</option>
+              <option value="BLACK">BLACK [ดำ]</option>
+            </select>
+          </div>
+
+          <div id="customColorSelection" class="hidden">
+            <input type="color" id="customPotionColor" value="#FFFFFF">
+            <input type="text" id="customPotionColorText" placeholder="หรือใส่รหัสสี HTML/RGB">
+          </div>
+        </div>
+
+        <label>Saturation [ความอิ่มตัว]</label>
+        <input type="number" id="saturation" step="0.1" min="0">
+
+        <label>Hunger [ความหิว]</label>
+        <input type="number" id="hunger" min="0" max="20">
+
+        <label>Health[สุขภาพ]</label>
+        <input type="number" id="health" step="0.5" min="0">
+
+        <label>Craftable [สามารถคราฟต์ได้]</label>
+        <select id="craftable">
+          <option value="true">true (สามารถคราฟต์ได้)</option>
+          <option value="false">false (ไม่สามารถคราฟต์ได้)</option>
+        </select>
+      </div>
+
+      <div class="section">
+        <h2>Effect [เอฟเฟกต์]</h2>
+        <button id="addEffectButton" onclick="showEffectPopup()" class="secondary">Add effects [เพิ่มเอฟเฟกต์]</button>
+        <div id="potionEffectsList"></div>
+      </div>
+
+      <div class="section" id="recipeSection">
+        <h2>Craft Recipes [สูตรคราฟต์]</h2>
+        <label>Craft_amount [จำนวนที่ได้]</label>
+        <input type="number" id="craft_amount" min="1" value="1">
+
+        <div class="material-input-group">
+          <label>Add Ingredients (Format: Character=Ingredient Name) [เพิ่มวัตถุดิบ (รูปแบบ: ตัวอักษร=ชื่อวัตถุดิบ)]</label>
+          <div class="material-input-row">
+            <select id="materialKeyInput" style="width: 80px; margin-right: 10px;">
+              <option value="">-- Select --</option>
+              <!-- ตัวเลือก a-z และ A-Z จะถูกเติมโดย JavaScript -->
+            </select>
+            <span>=</span>
+            <select id="materialValueInput" style="flex: 1; margin-left: 10px;">
+              <option value="">-- Select --</option>
+              <!-- ตัวเลือกวัตถุดิบจะถูกเติมโดย JavaScript -->
+            </select>
+            <button onclick="addMaterial()" class="small" style="margin-left: 10px;">Add (เพิ่ม)</button>
+          </div>
+        </div>
+
+        <div id="materialsList"
+          style="margin-top: 10px; border: 1px solid #ddd; padding: 10px; border-radius: 4px; min-height: 50px;">
+          <p style="color: #777; margin: 0;">No raw materials yet [ยังไม่มีวัตถุดิบ]</p>
+        </div>
+
+        <input type="hidden" id="materials" value="">
+
+        <label>Recipe Type (3x3) [รูปแบบ]</label>
+        <div class="grid recipe-grid">
+          <select id="r1c1" class="recipe-slot-select"></select>
+          <select id="r1c2" class="recipe-slot-select"></select>
+          <select id="r1c3" class="recipe-slot-select"></select>
+          <select id="r2c1" class="recipe-slot-select"></select>
+          <select id="r2c2" class="recipe-slot-select"></select>
+          <select id="r2c3" class="recipe-slot-select"></select>
+          <select id="r3c1" class="recipe-slot-select"></select>
+          <select id="r3c2" class="recipe-slot-select"></select>
+          <select id="r3c3" class="recipe-slot-select"></select>
+        </div>
+
+        <div class="recipe-preview">
+          <h3>Recipe Preview [ตัวอย่างสูตรคราฟต์]</h3>
+          <div class="recipe-grid-preview">
+            <div class="recipe-slot empty" id="preview-r1c1"></div>
+            <div class="recipe-slot empty" id="preview-r1c2"></div>
+            <div class="recipe-slot empty" id="preview-r1c3"></div>
+            <div class="recipe-slot empty" id="preview-r2c1"></div>
+            <div class="recipe-slot empty" id="preview-r2c2"></div>
+            <div class="recipe-slot empty" id="preview-r2c3"></div>
+            <div class="recipe-slot empty" id="preview-r3c1"></div>
+            <div class="recipe-slot empty" id="preview-r3c2"></div>
+            <div class="recipe-slot empty" id="preview-r3c3"></div>
+          </div>
+          <p>Craft_amount [จำนวนที่ได้]: <span id="preview-amount">1</span></p>
+        </div>
+      </div>
+
+      <div class="section">
+        <button id="saveButton" onclick="saveData()">Recipe save temporary record [บันทึกชั่วคราว]</button>
+        <button onclick="clearForm()" class="secondary">Clear Form [ล้างแบบฟอร์ม]</button>
+      </div>
+      <div class="section">
+        <i>
+          <h3>** After saving, please review all food items and click 'Update File' or 'Export' to save the actual file.**</h3>
+        </i>
+        <i>
+          <h3>** หลังบันทึกแล้วให้ตรวจาสอบข้อมูล รายการอาหารทั้งหมด และคลิก อัปเดตไฟล์ หรือ ส่งออก เพื่อบันทึกไฟล์จริง**</h3>
+        </i>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for Effects -->
+  <div id="effectPopup" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeEffectPopup()">&times;</span>
+      <h3>Add effects (เพิ่มเอฟเฟกต์)</h3>
+
+      <div id="effectError" class="error" style="display: none; margin-bottom: 10px;">
+        <i class="fas fa-exclamation-circle"></i> <span id="effectErrorMessage"></span>
+      </div>
+
+      <label>Effect (เอฟเฟกต์)</label>
+      <select id="effectInput">
+        <!-- ตัวเลือกเอฟเฟกต์ต่างๆ -->
+      </select>
+
+      <label>Length (second) [ระยะเวลา (วินาที)]</label>
+      <input type="number" id="durationInput" min="1" value="30">
+
+      <label>Amplifier (ระดับ)</label>
+      <input type="number" id="amplifierInput" min="0" value="0">
+
+      <button onclick="addPotionEffect()">Add effects (เพิ่มเอฟเฟกต์)</button>
+    </div>
+  </div>
+
+  <!-- Modal for Food Details -->
+  <div id="foodDetailModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeFoodDetail()">&times;</span>
+      <div id="foodDetailContent"></div>
+    </div>
+  </div>
+
+  <script>
+
+    // validateUniqueID
+    function validateUniqueID(input) {
+      // ใช้ regular expression เพื่ออนุญาตเฉพาะ a-z, A-Z, 0-9 และ _
+      const regex = /[^a-zA-Z0-9_]/g;
+
+      // แทนที่อักขระที่ไม่ถูกต้องด้วยสตริงว่าง
+      input.value = input.value.replace(regex, '');
+
+      // เรียกฟังก์ชันตรวจสอบ uniqueID ตามเดิม
+      checkUniqueID();
+    }
+    // ข้อมูลทั้งหมด
+    let foodData = [];
+    let currentPotionEffects = [];
+    let materialsData = [];
+
+    // ข้อมูลวัสดุเริ่มต้น
+    const DEFAULT_MATERIALS = [
+      "PLAYER_HEAD", "POTION", "BREAD", "COOKED_BEEF", "COOKED_CHICKEN",
+      "COOKED_PORKCHOP", "COOKED_MUTTON", "COOKED_COD", "COOKED_SALMON",
+      "APPLE", "GOLDEN_APPLE", "MELON_SLICE", "SWEET_BERRIES", "GLOW_BERRIES",
+      "CARROT", "POTATO", "BAKED_POTATO", "BEETROOT", "BEETROOT_SOUP",
+      "MUSHROOM_STEW", "RABBIT_STEW", "PUMPKIN_PIE", "COOKIE", "HONEY_BOTTLE",
+      "MILK_BUCKET"
+    ];
+
+    // โหลดข้อมูลวัสดุ
+    async function loadMaterials() {
+      try {
+        // 1. ล้างข้อมูลวัสดุเดิมก่อน
+        materialsData = [];
+
+        // 2. โหลดข้อมูลวัสดุใหม่
+        const response = await fetch('materials.json?t=' + new Date().getTime());
+        if (!response.ok) throw new Error('Failed to load file [โหลดไฟล์ไม่สำเร็จ]');
+
+        // 3. อ่านและอัพเดทข้อมูลวัสดุ
+        const materialsJson = await response.json();
+
+        // ตรวจสอบรูปแบบข้อมูล (ทั้งแบบ Array และ Object)
+        if (Array.isArray(materialsJson)) {
+          materialsData = [...materialsJson]; // กรณีเป็น Array โดยตรง
+        } else if (materialsJson.foodMaterial && Array.isArray(materialsJson.foodMaterial)) {
+          materialsData = [...materialsJson.foodMaterial]; // กรณีเป็น Object ที่มี property foodMaterial
+        } else {
+          throw new Error('Invalid file format [รูปแบบไฟล์ไม่ถูกต้อง]');
+        }
+
+        // 4. โหลดข้อมูลอาหาร
+        const cachedData = localStorage.getItem('foodDataCache');
+        if (cachedData) {
+          foodData = JSON.parse(cachedData);
+          //showToast('success', `โหลดข้อมูลอาหารจากแคชสำเร็จ (${foodData.length} รายการ)`, 3000);
+          showToast('success', `Food data loaded from cache successfully (${foodData.length} list)`, 3000);
+        } else {
+          loadInitialFoodData();
+          //showToast('info', 'ใช้ข้อมูลตัวอย่างเริ่มต้น', 3000);
+          showToast('info', 'Use default sample data', 3000);
+        }
+
+        // 5. อัพเดท dropdown
+        populateMaterialSelects();
+        setupMaterialInputs();
+        displayFoodList();
+
+        //showToast('success', `อัพเดทข้อมูลวัสดุสำเร็จ (${materialsData.length} รายการ)`, 3000);
+        showToast('success', `Finished material information update (${materialsData.length} list)`, 3000);
+
+      } catch (error) {
+        console.error('Error loading materials:', error);
+        // ใช้ข้อมูลเริ่มต้นหากโหลดไม่สำเร็จ
+        materialsData = [...DEFAULT_MATERIALS];
+        loadInitialFoodData();
+
+        showToast('error',
+          `⚠️ Error: ${error.message || 'Unable to load material data.'} - Use default data instead`,
+          5000
+        );
+        /*
+         showToast('error',
+          `⚠️ เกิดข้อผิดพลาด: ${error.message || 'ไม่สามารถโหลดข้อมูลวัสดุ'} - ใช้ข้อมูลเริ่มต้นแทน`,
+          5000
+        ); */
+      }
+    }
+
+    // ตัวแปรเก็บ Toast ทั้งหมด
+    let activeToasts = [];
+
+    function showToast(type, message, duration = 5000) {
+      // สร้าง Toast element
+      const toast = document.createElement('div');
+      toast.className = `toast toast-${type}`;
+      toast.innerHTML = `
+    <span>${message}</span>
+    <span class="toast-close" onclick="removeToast(this.parentElement)">&times;</span>
+  `;
+
+      // กำหนด position สำหรับ Toast ใหม่
+      const toastHeight = 60; // ความสูงของแต่ละ Toast (px)
+      const toastMargin = 10; // ระยะห่างระหว่าง Toast (px)
+
+      // คำนวณตำแหน่งเริ่มต้นของ Toast ใหม่
+      const offset = activeToasts.reduce((acc, t) =>
+        acc + t.offsetHeight + toastMargin, 20
+      );
+
+      toast.style.top = `${offset}px`;
+
+      // เพิ่ม animation
+      toast.style.animation = 'toastSlideIn 0.3s ease-out';
+
+      // เพิ่ม Toast ลงใน DOM และเก็บไว้ใน array
+      document.body.appendChild(toast);
+      activeToasts.push(toast);
+
+      // ตั้งเวลาให้ Toast หายไปเอง
+      const timeoutId = setTimeout(() => {
+        removeToast(toast);
+      }, duration);
+
+      // เก็บ timeoutId เพื่อให้สามารถยกเลิกได้ถ้าคลิกปุ่มปิด
+      toast.dataset.timeoutId = timeoutId;
+    }
+
+    function removeToast(toast) {
+      if (!toast) return;
+
+      // ยกเลิก timeout ถ้ามี
+      if (toast.dataset.timeoutId) {
+        clearTimeout(toast.dataset.timeoutId);
+      }
+
+      // เพิ่ม animation ก่อนลบ
+      toast.style.animation = 'toastFadeOut 0.3s ease-out forwards';
+
+      // ลบหลังจาก animation เสร็จ
+      setTimeout(() => {
+        // หาตำแหน่งของ Toast ที่จะลบ
+        const index = activeToasts.indexOf(toast);
+        if (index !== -1) {
+          activeToasts.splice(index, 1);
+        }
+
+        // อัพเดตตำแหน่งของ Toast ที่เหลือ
+        updateToastPositions();
+
+        // ลบ element ออกจาก DOM
+        toast.remove();
+      }, 300);
+    }
+
+    function updateToastPositions() {
+      const toastMargin = 10;
+      let currentTop = 20;
+
+      activeToasts.forEach(toast => {
+        toast.style.top = `${currentTop}px`;
+        currentTop += toast.offsetHeight + toastMargin;
+      });
+    }
+
+    // เพิ่ม CSS สำหรับ animation
+    const toastStyles = document.createElement('style');
+    toastStyles.textContent = `
+      @keyframes toastSlideIn {
+        from { 
+          transform: translateX(100%); 
+          opacity: 0;
+        }
+        to { 
+          transform: translateX(0); 
+          opacity: 1;
+        }
+      }
+      
+      @keyframes toastFadeOut {
+        to { 
+          transform: translateX(100%); 
+          opacity: 0;
+        }
+      }
+      
+      .toast {
+        position: fixed;
+        right: 20px;
+        padding: 15px 20px;
+        border-radius: 5px;
+        color: white;
+        z-index: 1001;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        max-width: 300px;
+        transition: top 0.3s ease;
+      }
+      
+      .toast-success {
+        background-color: var(--primary-color);
+      }
+      
+      .toast-error {
+        background-color: var(--danger-color);
+      }
+      
+      .toast-info {
+        background-color: var(--info-color);
+      }
+      
+      .toast-warning {
+        background-color: var(--warning-color);
+      }
+      
+      .toast-close {
+        margin-left: 15px;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 18px;
+      }
+    `;
+
+    document.head.appendChild(toastStyles);
+
+    // ฟังก์ชันปิด Toast ทั้งหมด
+    function closeAllToasts() {
+      activeToasts.forEach(toast => {
+        removeToast(toast);
+      });
+      activeToasts = [];
+    }
+
+
+    function showAlert(type, message, duration = 3000) {
+      const alertDiv = document.createElement('div');
+      alertDiv.className = `alert ${type}`;  // เพิ่มคลาสตามประเภท (success, error, info)
+      alertDiv.textContent = message;
+
+      // เพิ่มสไตล์สำหรับ alert แบบไดนามิก (หากยังไม่มีใน CSS)
+      const style = document.createElement('style');
+      style.textContent = `
+    .alert {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 15px;
+      border-radius: 5px;
+      color: white;
+      z-index: 1001;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      animation: slideIn 0.5s, fadeOut 0.5s ${duration / 1000 - 0.5}s;
+    }
+    .alert.success { background-color: var(--primary-color); } /* สีเขียว */
+    .alert.error { background-color: var(--danger-color); }   /* สีแดง */
+    .alert.info { background-color: #3498db; }                /* สีฟ้า */
+  `;
+
+      document.head.appendChild(style);
+      document.body.appendChild(alertDiv);
+
+      setTimeout(() => {
+        alertDiv.remove();
+        style.remove();
+      }, duration);
+    }
+
+    // โหลดข้อมูลอาหารเริ่มต้น
+    async function loadInitialFoodData() {
+      try {
+        // Try to load from localStorage first
+        const cachedData = localStorage.getItem('foodDataCache');
+        if (cachedData) {
+          foodData = JSON.parse(cachedData);
+          return;
+        }
+
+        // Fallback to example data
+        const initialData = [
+          {
+            "uniqueID": "example_food",
+            "displayName": "&aตัวอย่างอาหาร",
+            "description": [
+              "&7นี่คือตัวอย่างอาหาร",
+              "&7สร้างโดยระบบจัดการสูตรอาหาร"
+            ],
+            "instantEat": false,
+            "foodMaterial": "BREAD",
+            "saturation": 5,
+            "hunger": 3,
+            "health": 0,
+            "craftable": true,
+            "recipe": {
+              "shape": [
+                "aaa",
+                "a a",
+                "aaa"
+              ],
+              "materials": {
+                "a": "APPLE"
+              },
+              "craft_amount": 1
+            }
+          }
+        ];
+        foodData = initialData;
+      } catch (error) {
+        console.error('Error loading initial food data:', error);
+        foodData = [];
+      }
+    }
+
+    // เติมข้อมูลวัสดุใน select
+    function populateMaterialSelects() {
+      const foodMaterialSelect = document.getElementById('foodMaterial');
+      const outputMaterialSelect = document.getElementById('outputFoodMaterial');
+
+      // ล้างข้อมูลเดิมทั้งหมด
+      foodMaterialSelect.innerHTML = '';
+      outputMaterialSelect.innerHTML = '';
+
+      // เพิ่มตัวเลือกเริ่มต้น
+      const defaultOption = document.createElement('option');
+      defaultOption.value = '';
+      defaultOption.textContent = '-- Select --';
+      foodMaterialSelect.appendChild(defaultOption);
+
+      const defaultOutputOption = document.createElement('option');
+      defaultOutputOption.value = '';
+      defaultOutputOption.textContent = '-- None --';
+      outputMaterialSelect.appendChild(defaultOutputOption);
+
+      // เติมข้อมูลวัสดุใหม่
+      materialsData.forEach(material => {
+        // สำหรับ food material
+        const foodOption = document.createElement('option');
+        foodOption.value = material;
+        foodOption.textContent = material;
+        foodMaterialSelect.appendChild(foodOption);
+
+        // สำหรับ output material (ยกเว้น PLAYER_HEAD)
+        if (material !== "PLAYER_HEAD") {
+          const outputOption = document.createElement('option');
+          outputOption.value = material;
+          outputOption.textContent = material;
+          outputMaterialSelect.appendChild(outputOption);
+        }
+      });
+    }
+
+    // เปิดแท็บ
+    function openTab(tabId) {
+      // ซ่อนแท็บทั้งหมด
+      document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.remove('active');
+      });
+
+      // แสดงแท็บที่เลือก
+      document.getElementById(tabId).classList.add('active');
+
+      // อัพเดตสถานะแท็บ
+      document.querySelectorAll('.tab').forEach(tab => {
+        tab.classList.remove('active');
+      });
+
+      // ตั้งค่าแท็บที่คลิกเป็น active
+      event.currentTarget.classList.add('active');
+    }
+
+    // ตรวจสอบ uniqueID
+    function checkUniqueID() {
+      const uniqueID = document.getElementById("uniqueID").value;
+      const warning = document.getElementById("uniqueIDWarning");
+      const success = document.getElementById("uniqueIDSuccess");
+      const exists = foodData.some(d => d.uniqueID === uniqueID);
+
+      if (uniqueID === '') {
+        warning.style.display = "none";
+        success.style.display = "none";
+      } else if (exists) {
+        warning.style.display = "block";
+        warning.innerHTML = '<i class="fas fa-exclamation-circle"></i> uniqueID นี้มีอยู่แล้ว!';
+        success.style.display = "none";
+      } else {
+        warning.style.display = "none";
+        success.style.display = "block";
+        success.innerHTML = '<i class="fas fa-check-circle"></i> uniqueID นี้สามารถใช้ได้';
+      }
+    }
+
+    // เปลี่ยนการแสดงผลตามประเภทวัสดุ
+    function handleMaterialChange() {
+        const material = document.getElementById("foodMaterial").value;
+
+        // Hide all special fields first
+        document.getElementById("headTextureField").classList.add("hidden");
+        document.getElementById("outputMaterialField").classList.add("hidden");
+        document.getElementById("potionColorField").classList.add("hidden");
+
+        // Clear special fields when material changes
+        document.getElementById("headTexture").value = '';
+        document.getElementById("outputFoodMaterial").value = '';
+        document.getElementById("potionColor").value = 'WHITE';
+
+        // Show relevant fields based on material type
+        if (material === "PLAYER_HEAD") {
+          document.getElementById("headTextureField").classList.remove("hidden");
+        }
+        else if (material === "POTION") {
+          document.getElementById("outputMaterialField").classList.remove("hidden");
+          // Don't show potionColorField yet - wait for output material selection
+        }
+      }
+
+    function handleOutputMaterialChange() {
+        const foodMaterial = document.getElementById("foodMaterial").value;
+        const outputMaterial = document.getElementById("outputFoodMaterial").value;
+
+        // Only show potion color if both are POTION
+        if (foodMaterial === "POTION" && outputMaterial === "POTION") {
+          document.getElementById("potionColorField").classList.remove("hidden");
+          // Set default value to BLUE
+          document.getElementById("potionColor").value = 'BLUE';
+        } else {
+          document.getElementById("potionColorField").classList.add("hidden");
+        }
+      }
+
+    // เปลี่ยนการแสดงผลตามประเภทสีของ Potion
+    function handlePotionColorTypeChange() {
+      const type = document.getElementById("potionColorType").value;
+      if (type === "basic") {
+        document.getElementById("basicColorSelection").classList.remove("hidden");
+        document.getElementById("customColorSelection").classList.add("hidden");
+      } else {
+        document.getElementById("basicColorSelection").classList.add("hidden");
+        document.getElementById("customColorSelection").classList.remove("hidden");
+      }
+    }
+
+    // แสดง popup เพิ่มเอฟเฟกต์
+    function showEffectPopup() {
+      // ซ่อนข้อความผิดพลาดเก่า
+      document.getElementById("effectError").style.display = "none";
+
+      // กรองเอฟเฟกต์ที่ยังไม่ได้เพิ่ม
+      const availableEffects = getAllPotionEffects().filter(effect =>
+        !currentPotionEffects.some(added => added.effect === effect.value)
+      );
+
+      // อัพเดทตัวเลือกเอฟเฟกต์
+      const effectSelect = document.getElementById("effectInput");
+      effectSelect.innerHTML = '';
+
+      availableEffects.forEach(effect => {
+        const option = document.createElement('option');
+        option.value = effect.value;
+        option.textContent = effect.label;
+        effectSelect.appendChild(option);
+      });
+
+      document.getElementById("effectPopup").style.display = "block";
+    }
+
+    // เพิ่มฟังก์ชันช่วยเหลือ
+    function getAllPotionEffects() {
+      return [
+        { value: "SPEED", label: "SPEED (ความเร็ว)" },
+        { value: "SLOW", label: "SLOW (ความช้า)" },
+        { value: "FAST_DIGGING", label: "FAST_DIGGING (ขุดเร็ว)" },
+        { value: "SLOW_DIGGING", label: "SLOW_DIGGING (ขุดช้า)" },
+        { value: "INCREASE_DAMAGE", label: "INCREASE_DAMAGE (เพิ่มความเสียหาย)" },
+        { value: "HEAL", label: "HEAL (รักษา)" },
+        { value: "HARM", label: "HARM (ทำลาย)" },
+        { value: "JUMP", label: "JUMP (กระโดด)" },
+        { value: "CONFUSION", label: "CONFUSION (มึนงง)" },
+        { value: "REGENERATION", label: "REGENERATION (ฟื้นฟู)" },
+        { value: "DAMAGE_RESISTANCE", label: "DAMAGE_RESISTANCE (ต้านทานความเสียหาย)" },
+        { value: "FIRE_RESISTANCE", label: "FIRE_RESISTANCE (ต้านทานไฟ)" },
+        { value: "WATER_BREATHING", label: "WATER_BREATHING (หายใจใต้น้ำ)" },
+        { value: "INVISIBILITY", label: "INVISIBILITY (ล่องหน)" },
+        { value: "BLINDNESS", label: "BLINDNESS (ตาบอด)" },
+        { value: "NIGHT_VISION", label: "NIGHT_VISION (มองในที่มืด)" },
+        { value: "HUNGER", label: "HUNGER (ความหิว)" },
+        { value: "WEAKNESS", label: "WEAKNESS (อ่อนแอ)" },
+        { value: "POISON", label: "POISON (พิษ)" },
+        { value: "WITHER", label: "WITHER (เน่าเปื่อย)" },
+        { value: "HEALTH_BOOST", label: "HEALTH_BOOST (เพิ่มสุขภาพ)" },
+        { value: "ABSORPTION", label: "ABSORPTION (ดูดซับ)" },
+        { value: "SATURATION", label: "SATURATION (ความอิ่มตัว)" },
+        { value: "GLOWING", label: "GLOWING (เรืองแสง)" },
+        { value: "LEVITATION", label: "LEVITATION (ลอยตัว)" },
+        { value: "LUCK", label: "LUCK (โชคดี)" },
+        { value: "UNLUCK", label: "UNLUCK (โชคร้าย)" },
+        { value: "SLOW_FALLING", label: "SLOW_FALLING (ร่วงช้า)" },
+        { value: "CONDUIT_POWER", label: "CONDUIT_POWER (พลังคอนดิวต์)" },
+        { value: "DOLPHINS_GRACE", label: "DOLPHINS_GRACE (ความเร็วในน้ำ)" },
+        { value: "BAD_OMEN", label: "BAD_OMEN (ลางร้าย)" },
+        { value: "HERO_OF_THE_VILLAGE", label: "HERO_OF_THE_VILLAGE (ฮีโร่แห่งหมู่บ้าน)" }
+      ];
+    }
+
+    // ปิด popup เอฟเฟกต์
+    function closeEffectPopup() {
+      document.getElementById("effectPopup").style.display = "none";
+    }
+
+    // ในฟังก์ชัน addPotionEffect()
+    function addPotionEffect() {
+      const effect = document.getElementById("effectInput").value;
+      const duration = document.getElementById("durationInput").value * 20;
+      const amplifier = document.getElementById("amplifierInput").value;
+
+      // ตรวจสอบว่ามีเอฟเฟกต์นี้อยู่แล้วหรือไม่
+      if (currentPotionEffects.some(e => e.effect === effect)) {
+        document.getElementById("effectErrorMessage").textContent =
+          "his effect has been added to the list. [เอฟเฟกต์นี้ได้ถูกเพิ่มไปแล้วในรายการ]!";
+        document.getElementById("effectError").style.display = "block";
+        return;
+      }
+
+      if (effect && duration && amplifier !== '') {
+        currentPotionEffects.push({
+          effect,
+          duration: parseInt(duration),
+          amplifier: parseInt(amplifier)
+        });
+        updatePotionEffectsList();
+        closeEffectPopup();
+      } else {
+        document.getElementById("effectErrorMessage").textContent =
+          "Please fill in all information completely. [กรุณากรอกข้อมูลให้ครบถ้วน]!";
+        document.getElementById("effectError").style.display = "block";
+      }
+    }
+
+    // อัพเดตรายการเอฟเฟกต์
+    function updatePotionEffectsList() {
+      const listDiv = document.getElementById("potionEffectsList");
+      listDiv.innerHTML = "";
+
+      if (currentPotionEffects.length === 0) {
+        listDiv.innerHTML = "<p>No effect yet [ยังไม่มีเอฟเฟกต์]</p>";
+        return;
+      }
+
+      currentPotionEffects.forEach((effect, index) => {
+        const div = document.createElement("div");
+        div.className = "effect-entry";
+        div.innerHTML = `
+          <p><strong>${effect.effect}</strong> (ระดับ ${effect.amplifier}) - ${effect.duration / 20} วินาที</p>
+          <button onclick="removePotionEffect(${index})" class="danger">ลบ</button>
+        `;
+        listDiv.appendChild(div);
+      });
+    }
+
+    // ลบเอฟเฟกต์
+    function removePotionEffect(index) {
+      currentPotionEffects.splice(index, 1);
+      updatePotionEffectsList();
+    }
+
+    // โหลดไฟล์ JSON
+    async function loadJsonFile() {
+      const fileInput = document.getElementById('jsonLoader');
+      const file = fileInput.files[0];
+
+      if (!file) {
+        showToast('error', 'กรุณาเลือกไฟล์ JSON ก่อน', 3000);
+        return;
+      }
+
+      try {
+        const content = await file.text();
+        const loadedData = JSON.parse(content);
+
+        // ตรวจสอบว่าเป็น Array หรือไม่
+        if (Array.isArray(loadedData)) {
+          foodData = loadedData;
+          displayFoodList();
+
+          // แสดงข้อความสำเร็จแบบ Toast
+          showToast('success', `โหลดข้อมูลสำเร็จ! พบ ${foodData.length} รายการ`, 3000);
+
+          // บันทึกข้อมูลลง localStorage (เพิ่มมาใหม่)
+          localStorage.setItem('foodDataCache', JSON.stringify(foodData));
+        } else {
+          throw new Error('รูปแบบไฟล์ไม่ถูกต้อง ต้องเป็น Array');
+        }
+      } catch (error) {
+        console.error('Error loading JSON:', error);
+
+        // แสดงข้อความผิดพลาดแบบ Toast
+        let errorMessage = error.message;
+
+        // แปล error message ให้เข้าใจง่ายขึ้น
+        if (error instanceof SyntaxError) {
+          errorMessage = 'ไฟล์ JSON ไม่ถูกต้อง';
+        }
+
+        showToast('error', `เกิดข้อผิดพลาด: ${errorMessage}`, 5000);
+
+        // โหลดข้อมูลจาก cache หากมี (เพิ่มมาใหม่)
+        const cachedData = localStorage.getItem('foodDataCache');
+        if (cachedData) {
+          try {
+            foodData = JSON.parse(cachedData);
+            displayFoodList();
+            showToast('info', 'ใช้ข้อมูลล่าสุดที่บันทึกไว้', 3000);
+          } catch (e) {
+            console.error('Failed to load cached data:', e);
+          }
+        }
+      }
+    }
+
+    // บันทึกข้อมูล
+    function saveData() {
+      const uniqueID = document.getElementById("uniqueID").value;
+      const warning = document.getElementById("uniqueIDWarning");
+      const success = document.getElementById("uniqueIDSuccess");
+
+      if (uniqueID === '') {
+        warning.style.display = "block";
+        warning.textContent = "กรุณากรอก uniqueID";
+        success.style.display = "none";
+        return;
+      }
+
+      if (warning.style.display === "block") {
+        return;
+      }
+
+
+      // สร้างวัตถุดิบจาก input
+      const materialsInput = document.getElementById("materials").value;
+      const materialsObj = { ...materialsList };
+
+      if (materialsInput) {
+        materialsInput.split(',').forEach(pair => {
+          const [key, value] = pair.split('=');
+          if (key && value) {
+            materialsObj[key.trim()] = value.trim();
+          }
+        });
+      }
+
+      // สร้าง shape จาก input
+      const shape = [
+        (document.getElementById("r1c1").value || ' ') +
+        (document.getElementById("r1c2").value || ' ') +
+        (document.getElementById("r1c3").value || ' '),
+        (document.getElementById("r2c1").value || ' ') +
+        (document.getElementById("r2c2").value || ' ') +
+        (document.getElementById("r2c3").value || ' '),
+        (document.getElementById("r3c1").value || ' ') +
+        (document.getElementById("r3c2").value || ' ') +
+        (document.getElementById("r3c3").value || ' ')
+      ];
+
+      // สร้าง potion effects object
+      const potionEffectsObj = {};
+      currentPotionEffects.forEach(effect => {
+        potionEffectsObj[effect.effect] = {
+          duration: parseInt(effect.duration),
+          amplifier: parseInt(effect.amplifier)
+        };
+      });
+
+      // สร้าง entry ใหม่
+      let potionColorValue;
+      if (document.getElementById("foodMaterial").value === "POTION" &&
+        document.getElementById("outputFoodMaterial").value === "POTION") {
+        const colorType = document.getElementById("potionColorType").value;
+        if (colorType === "basic") {
+          potionColorValue = document.getElementById("potionColor").value || null;
+        } else {
+          potionColorValue = document.getElementById("customPotionColor").value ||
+            document.getElementById("customPotionColorText").value || null;
+        }
+      }
+      const entry = {
+        uniqueID,
+        displayName: document.getElementById("displayName").value,
+        description: document.getElementById("description").value.split('\n'),
+        instantEat: document.getElementById("instantEat").value === 'true',
+        foodMaterial: document.getElementById("foodMaterial").value,
+        headTexture: document.getElementById("headTexture").value,
+        potionColor: potionColorValue,
+        saturation: parseFloat(document.getElementById("saturation").value) || 0,
+        hunger: parseInt(document.getElementById("hunger").value) || 0,
+        health: parseFloat(document.getElementById("health").value) || 0,
+        craftable: document.getElementById("craftable").value === 'true',
+        potionEffects: potionEffectsObj
+      };
+
+      // เพิ่ม outputFoodMaterial ถ้ามีค่า (ไม่รวม PLAYER_HEAD)
+      const outputMaterial = document.getElementById("outputFoodMaterial").value;
+      if (outputMaterial && entry.foodMaterial !== "PLAYER_HEAD") {
+        entry.outputFoodMaterial = outputMaterial;
+      }
+
+      // เพิ่ม recipe ถ้า craftable
+      if (entry.craftable === true) { // เปลี่ยนจาก 'true' เป็น true
+        entry.recipe = {
+          shape: shape,
+          materials: materialsObj, // ใช้ materialsObj ที่สร้างจาก materialsList
+          craft_amount: parseInt(document.getElementById("craft_amount").value) || 1
+        };
+      } else if (entry.craftable === false) { // เปลี่ยนจาก 'false' เป็น false
+        entry.recipe = {
+          shape: shape,
+          materials: materialsObj, // ใช้ materialsObj ที่สร้างจาก materialsList
+          craft_amount: parseInt(document.getElementById("craft_amount").value) || 1,
+          disabled: true
+        };
+      }
+
+      // ตรวจสอบว่ามี uniqueID นี้อยู่แล้วหรือไม่
+      const existingIndex = foodData.findIndex(item => item.uniqueID === uniqueID);
+
+      if (existingIndex >= 0) {
+        // อัพเดตข้อมูลที่มีอยู่
+        foodData[existingIndex] = entry;
+        showToast('success', `อัพเดต "${entry.displayName}" สำเร็จ!`, 3000);
+      } else {
+        // เพิ่มข้อมูลใหม่
+        foodData.push(entry);
+        showToast('success', `เพิ่ม "${entry.displayName}" สำเร็จ!`, 3000);
+      }
+      clearForm();
+      displayFoodList();
+    }
+    // แสดงข้อความแจ้งเตือน
+    function showAlert(type, message) {
+      const alertDiv = document.createElement('div');
+      alertDiv.className = `alert ${type}`;
+      alertDiv.textContent = message;
+
+      // เพิ่มสไตล์สำหรับ alert
+      const style = document.createElement('style');
+      style.textContent = `
+        .alert {
+          position: fixed;
+          top: 20px;
+          right: 20px;
+          padding: 15px;
+          border-radius: 5px;
+          color: white;
+          z-index: 1001;
+          box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+          animation: slideIn 0.5s, fadeOut 0.5s 2.5s;
+        }
+        .alert.success { background-color: var(--primary-color); }
+        .alert.error { background-color: var(--danger-color); }
+        @keyframes slideIn {
+          from { transform: translateX(100%); }
+          to { transform: translateX(0); }
+        }
+        @keyframes fadeOut {
+          from { opacity: 1; }
+          to { opacity: 0; }
+        }
+      `;
+      document.head.appendChild(style);
+
+      document.body.appendChild(alertDiv);
+
+      // ลบการแจ้งเตือนหลังจาก 3 วินาที
+      setTimeout(() => {
+        alertDiv.remove();
+        style.remove();
+      }, 3000);
+    }
+    // บันทึกข้อมูลลงไฟล์ JSON
+    async function saveToFile() {
+      if (foodData.length === 0) {
+        showToast('error', "ไม่มีข้อมูลที่จะบันทึก", 3000);
+        return;
+      }
+
+      try {
+        const jsonStr = JSON.stringify(foodData, null, 2);
+
+        // ตรวจสอบว่า Browser รองรับ File System Access API หรือไม่
+        if ('showSaveFilePicker' in window) {
+          try {
+            // สร้างไฟล์ใหม่หรืออัพเดทไฟล์ที่มีอยู่
+            const handle = await window.showSaveFilePicker({
+              suggestedName: 'datafoods.json',
+              types: [{
+                description: 'JSON Files',
+                accept: { 'application/json': ['.json'] },
+              }],
+            });
+
+            const writable = await handle.createWritable();
+            await writable.write(jsonStr);
+            await writable.close();
+
+            showToast('success', "อัพเดทไฟล์ datafoods.json สำเร็จ", 3000);
+          } catch (err) {
+            if (err.name !== 'AbortError') {
+              console.error('Error saving file:', err);
+              fallbackSave(jsonStr); // ใช้วิธีเดิมถ้าไม่สามารถใช้ File System API ได้
+            }
+          }
+        } else {
+          fallbackSave(jsonStr); // ใช้วิธีเดิมถ้า Browser ไม่รองรับ
+        }
+      } catch (error) {
+        console.error('Error saving file:', error);
+        showToast('error', "เกิดข้อผิดพลาดขณะบันทึกไฟล์", 3000);
+      }
+    }
+
+    // ฟังก์ชันสำรองสำหรับ Browser ที่ไม่รองรับ File System API
+    function fallbackSave(jsonStr) {
+      const blob = new Blob([jsonStr], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'datafoods.json';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      showToast('info', "บันทึกไฟล์ datafoods.json สำเร็จ (โหมดดาวน์โหลด)", 3000);
+    }
+
+
+    // Export function to show food detail
+    function exportToFile() {
+      if (foodData.length === 0) {
+        showToast('error', "ไม่มีข้อมูลที่จะส่งออก", 3000);
+        return;
+      }
+
+      const jsonStr = JSON.stringify(foodData, null, 2);
+      const blob = new Blob([jsonStr], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'datafoods_export_' + new Date().toISOString().slice(0, 10) + '.json';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      showToast('success', "ส่งออกข้อมูลสำเร็จ", 3000);
+    }
+
+    // แสดงรายการอาหาร
+    function displayFoodList() {
+      const container = document.getElementById("foodList");
+      container.innerHTML = "";
+
+      if (foodData.length === 0) {
+        container.innerHTML = "<p class='no-data'>ไม่มีข้อมูลอาหาร</p>";
+        return;
+      }
+
+      foodData.forEach((food, index) => {
+        const card = document.createElement("div");
+        card.className = "food-card";
+        card.dataset.index = index; // เพิ่ม data attribute สำหรับเก็บ index
+
+        // ส่วนเนื้อหาการ์ด
+        const contentDiv = document.createElement("div");
+        contentDiv.className = "food-card-content";
+
+        // สร้าง HTML สำหรับการ์ด
+        let html = `
+      <div class="food-header">
+        <h3>${food.displayName || 'ไม่มีชื่อ'}</h3>
+        <span class="craft-status ${food.craftable ? 'active' : 'inactive'}">
+          ${food.craftable ? 'Can Craft (สามารถคราฟต์)' : 'Closed (ปิดการคราฟต์)'}
+        </span>
+      </div>
+      <div class="food-details">
+        <p><i class="fas fa-tag"></i> <strong>UniqueID::</strong> ${food.uniqueID}</p>
+        <p><i class="fas fa-cube"></i> <strong>Material (ประเภท):</strong> ${food.foodMaterial}</p>
+        <p><i class="fas fa-heart"></i> <strong>Status (สถานะ):</strong> 
+          หิว +${food.hunger || 0}, 
+          อิ่ม +${food.saturation || 0}, 
+          สุขภาพ +${food.health || 0}
+        </p>
+      </div>
+    `;
+
+        contentDiv.innerHTML = html;
+
+        // ส่วนปุ่มดำเนินการ
+        const actionsDiv = document.createElement("div");
+        actionsDiv.className = "food-card-actions";
+        actionsDiv.innerHTML = `
+      <button class="btn-edit" data-index="${index}">
+        <i class="fas fa-edit"></i> Edit (แก้ไข)
+      </button>
+      <button class="btn-delete" data-index="${index}">
+        <i class="fas fa-trash"></i> Delete (ลบ)
+      </button>
+    `;
+
+        card.appendChild(contentDiv);
+        card.appendChild(actionsDiv);
+        container.appendChild(card);
+      });
+
+      // เพิ่ม Event Listeners แบบ Delegation
+      container.addEventListener('click', (e) => {
+        const card = e.target.closest('.food-card');
+        if (!card) return;
+
+        const index = card.dataset.index;
+
+        // ถ้าคลิกที่เนื้อหาการ์ด (ไม่ใช่ปุ่ม)
+        if (e.target.closest('.food-card-content')) {
+          showFoodDetail(foodData[index]);
+        }
+        // ถ้าคลิกปุ่มแก้ไข
+        else if (e.target.closest('.btn-edit')) {
+          e.stopPropagation();
+          editFood(index);
+        }
+        // ถ้าคลิกปุ่มลบ
+        else if (e.target.closest('.btn-delete')) {
+          e.stopPropagation();
+          deleteFood(index);
+        }
+      });
+    }
+
+    // แก้ไขอาหาร
+    function editFood(index) {
+      const food = foodData[index];
+
+      // ล้างฟอร์มทั้งหมดก่อนโหลดข้อมูลใหม่
+      clearForm();
+
+      // กรอกข้อมูลพื้นฐาน
+      document.getElementById("uniqueID").value = food.uniqueID;
+      document.getElementById("displayName").value = food.displayName;
+      document.getElementById("description").value = food.description.join('\n');
+      document.getElementById("instantEat").value = food.instantEat;
+      document.getElementById("foodMaterial").value = food.foodMaterial;
+      document.getElementById("saturation").value = food.saturation || 0;
+      document.getElementById("hunger").value = food.hunger || 0;
+      document.getElementById("health").value = food.health || 0;
+      document.getElementById("craftable").value = food.craftable;
+
+      // กรอกข้อมูลสูตรคราฟต์ (แสดงเสมอถ้ามีข้อมูล)
+      if (food.recipe) {
+        materialsList = {};
+        for (const [key, value] of Object.entries(food.recipe.materials)) {
+          materialsList[key] = value;
+        }
+        updateMaterialsDisplay();
+        updateMaterialsHiddenInput();
+
+        // อัพเดทตัวเลือกในตารางสูตร
+        updateRecipeSlotOptions();
+
+        // กรอกจำนวนที่ได้
+        document.getElementById("craft_amount").value = food.recipe.craft_amount || 1;
+
+        // กรอกช่องสูตรคราฟต์ 3x3
+        if (food.recipe.shape && food.recipe.shape.length === 3) {
+          for (let row = 0; row < 3; row++) {
+            const rowPattern = food.recipe.shape[row];
+            for (let col = 0; col < 3; col++) {
+              const char = rowPattern && rowPattern[col] ? rowPattern[col] : '';
+              // ตั้งค่าตัวเลือกใน select
+              const select = document.getElementById(`r${row + 1}c${col + 1}`);
+              select.value = char.trim();
+            }
+          }
+        }
+      }
+
+      // กรอกข้อมูลเฉพาะประเภท
+      if (food.foodMaterial === "PLAYER_HEAD") {
+        document.getElementById("headTexture").value = food.headTexture || '';
+        document.getElementById("headTextureField").classList.remove("hidden");
+      }
+      else if (food.foodMaterial === "POTION") {
+        document.getElementById("outputFoodMaterial").value = food.outputFoodMaterial || "";
+        document.getElementById("outputMaterialField").classList.remove("hidden");
+         // Only show potion color if output is also POTION
+        if (food.outputFoodMaterial === "POTION") {
+          document.getElementById("potionColorField").classList.remove("hidden");
+          document.getElementById("potionColor").value = food.potionColor || "BLUE";
+        }
+      }
+
+      // กรอกเอฟเฟกต์
+      currentPotionEffects = [];
+      if (food.potionEffects) {
+        for (const [effect, details] of Object.entries(food.potionEffects)) {
+          currentPotionEffects.push({
+            effect,
+            duration: details.duration,
+            amplifier: details.amplifier
+          });
+        }
+      }
+
+      updatePotionEffectsList();
+      updateRecipePreview();
+
+      // เปิดแท็บแก้ไขและเลื่อนไปด้านบน
+      openTab('add-tab');
+      window.scrollTo(0, 0);
+    }
+
+    // ลบอาหาร
+    async function deleteFood(index) {
+      return new Promise((resolve) => {
+        const foodName = foodData[index].displayName.replace(/&[0-9a-fk-or]/g, '') || 'รายการนี้';
+
+        // สร้าง Toast แจ้งเตือน
+        const toast = document.createElement('div');
+        toast.className = 'toast toast-warning';
+        toast.style.animation = 'none'; // ปิด animation ชั่วคราว
+
+        /*toast.innerHTML = `
+        <span>ต้องการลบ "${foodName}" จริงๆหรือไม่? </span>
+        <div class="toast-actions">
+          <button id="confirmDelete" class="toast-confirm">ลบ</button>
+          <button id="cancelDelete" class="toast-cancel">ยกเลิก</button>
+        </div>
+      `;*/
+
+        toast.innerHTML = `
+          <span>"${foodName}" Delete?.. </span>
+          <div class="toast-actions">
+            <button id="confirmDelete" class="toast-confirm">Yes</button>
+            <button id="cancelDelete" class="toast-cancel">Cancel</button>
+          </div>
+        `;
+
+        document.body.appendChild(toast);
+
+        // ฟังก์ชันสำหรับลบ Toast
+        const removeToast = () => {
+          toast.remove();
+          document.removeEventListener('click', outsideClickListener);
+        };
+
+        // ฟังก์ชันตรวจสอบการคลิกภายนอก
+        const outsideClickListener = (e) => {
+          if (!toast.contains(e.target)) {
+            removeToast();
+            resolve(false);
+          }
+        };
+
+        // เพิ่ม Event Listeners
+        const confirmDelete = () => {
+          removeToast();
+          resolve(true);
+        };
+
+        const cancelDelete = () => {
+          removeToast();
+          resolve(false);
+        };
+
+        // ใช้ Event Delegation แทน
+        toast.addEventListener('click', (e) => {
+          if (e.target.id === 'confirmDelete') {
+            confirmDelete();
+          } else if (e.target.id === 'cancelDelete') {
+            cancelDelete();
+          }
+        });
+
+        // เพิ่มการตรวจสอบการคลิกภายนอก
+        document.addEventListener('click', outsideClickListener);
+
+        // ตั้งเวลาให้ Toast หายไปเองถ้าไม่มีการตอบสนอง
+        const timeoutId = setTimeout(() => {
+          removeToast();
+          resolve(false);
+        }, 10000); // 10 วินาที
+
+        // ยกเลิก timeout เมื่อมีการตอบสนอง
+        toast.addEventListener('click', () => clearTimeout(timeoutId));
+      }).then(async (confirmed) => {
+        if (confirmed) {
+          try {
+            const deletedItem = foodData.splice(index, 1)[0];
+            displayFoodList();
+            localStorage.setItem('foodDataCache', JSON.stringify(foodData));
+            //showToast('success', `ลบ "${deletedItem.displayName}" สำเร็จแล้ว`, 3000);
+            showToast('success', `Delete "${deletedItem.displayName}" Done`, 3000);
+          } catch (error) {
+            //showToast('error', 'เกิดข้อผิดพลาดขณะลบข้อมูล', 3000);
+            showToast('error', 'An error occurred while deleting data.', 3000);
+          }
+        }
+      });
+    }
+
+    // แสดงรายละเอียดอาหาร
+    function showFoodDetail(food) {
+      const modal = document.getElementById("foodDetailModal");
+      const content = document.getElementById("foodDetailContent");
+
+      // สร้าง HTML สำหรับแสดงรายละเอียดอาหาร
+      let html = `
+            <div class="food-detail-container">
+                <div class="food-detail-left">
+                    <h2>${food.displayName || 'ไม่มีชื่อ'}</h2>
+                    <p><strong>UniqueID:</strong> ${food.uniqueID}</p>
+                    <p><strong>FoodMaterial  (ประเภท):</strong> ${food.foodMaterial}</p>
+                    <p><strong>Craftable (สถานะคราฟต์):</strong>
+                        <span class="craft-status ${food.craftable ? 'active' : 'inactive'}">
+                            ${food.craftable ? '✅ Open / เปิดใช้งาน' : '❌ Closed / ปิดใช้งาน'}
+                        </span>
+                    </p>
+                      <p><strong>InstantEat [กินทันที]:</strong>
+                      <span class="craft-status ${food.instantEat ? 'active' : 'inactive'}">
+                        ${food.instantEat ? '✅ Yes / ใช่' : '❌ No / ไม่ใช่'}
+                      </span>
+                    </p>
+
+                    <!-- คำอธิบาย -->
+                    ${food.description && food.description.length > 0 ? `
+                        <h3>Description (คำอธิบาย):</h3>
+                        ${food.description.map(line => `<p>${line}</p>`).join('')}
+                    ` : ''}
+
+                    <h3>Status (ค่าสถานะ):</h3>
+                    <ul>    
+                        <li>Saturation [ความอิ่มตัว]: +${food.saturation || 0}</li>
+                        <li>Hunger [ความหิว]: +${food.hunger || 0}</li>
+                        <li>Health[สุขภาพ]: +${food.health || 0}</li>
+                        <!--  <li>กินทันที: ${food.instantEat ? 'ใช่' : 'ไม่ใช่'}</li> -->
+                    </ul>
+                </div>
+
+                <div class="food-detail-right">
+          `;
+
+      // ส่วนแสดงเอฟเฟกต์ (ถ้ามี)
+      if (food.potionEffects && Object.keys(food.potionEffects).length > 0) {
+        html += `
+              <div class="effects-section">
+                  <h3>Effect [เอฟเฟกต์]:</h3>
+                  <div class="effects-list">
+                      <ul>
+                          ${Object.entries(food.potionEffects).map(([effect, details]) => `
+                              <li>${effect} (Amplifier (ระดับ) ${details.amplifier}) - ${details.duration / 20} second (วินาที)</li>
+                          `).join('')}
+                      </ul>
+                  </div>
+              </div>
+            `;
+      }
+
+      // ส่วนแสดงสูตรคราฟต์ (ถ้ามี)
+      if (food.recipe) {
+        // นับจำนวนวัตถุดิบที่ใช้
+        const materialCounts = {};
+        for (const material of Object.values(food.recipe.materials)) {
+          materialCounts[material] = 0;
+        }
+
+        // นับจำนวนที่ใช้จริงในตาราง
+        for (const row of food.recipe.shape) {
+          for (const char of row) {
+            if (char && food.recipe.materials[char]) {
+              const material = food.recipe.materials[char];
+              materialCounts[material]++;
+            }
+          }
+        }
+
+        // สร้าง HTML สำหรับสูตรคราฟต์
+        html += `
+              <div class="crafting-section">
+                  <h3>Recipe Preview (สูตรคราฟต์):</h3>
+                  <p>Craft_amount [จำนวนที่ได้]: ${food.recipe.craft_amount || 1}</p>
+                  
+                  <!-- ตารางสูตรคราฟต์ -->
+                  <div class="recipe-grid-preview">
+                      ${food.recipe.shape.map(row => `
+                          ${row.split('').map(char => `
+                              <div class="recipe-slot ${char.trim() ? '' : 'empty'}">
+                                  <div class="recipe-slot-content">
+                                      ${char.trim() ? `
+                                          <div class="recipe-slot-char">${char}</div>
+                                          <div class="recipe-slot-material">${food.recipe.materials[char] || ''}</div>
+                                      ` : ''}
+                                  </div>
+                              </div>
+                          `).join('')}
+                      `).join('')}
+                  </div>
+                  
+                  <!-- สรุปวัตถุดิบที่ใช้ -->
+                  <div class="materials-summary">
+                      <h4>Raw materials used [วัตถุดิบที่ใช้]:</h4>
+                      <ul>
+                          ${Object.entries(materialCounts)
+            .filter(([_, count]) => count > 0)
+            .map(([material, count]) => `<li>${material} ×${count}</li>`)
+            .join('') || '<li style="color: #777;">ไม่มีวัตถุดิบ</li>'}
+                      </ul>
+                  </div>
+              </div>
+            `;
+      }
+
+      // เพิ่มส่วนแสดง JSON Data
+      html += `
+              <div class="json-section">
+                  <h3>JSON Data:</h3>
+                  <pre>${JSON.stringify(food, null, 2)}</pre>
+              </div>
+            </div>
+          `;
+
+      content.innerHTML = html;
+      modal.style.display = "block";
+    }
+
+    // ปิด modal รายละเอียดอาหาร
+    function closeFoodDetail() {
+      document.getElementById("foodDetailModal").style.display = "none";
+    }
+
+    // ตัวแปรเก็บวัตถุดิบ
+    let materialsList = {};
+
+    // ลบวัตถุดิบ
+    function removeMaterial(key) {
+      delete materialsList[key];
+      updateMaterialsDisplay();
+      updateMaterialsHiddenInput();
+      updateRecipeSlotOptions();
+      updateRecipePreview();
+    }
+
+    // UpdateRecipeSlotOptions
+    function updateRecipeSlotOptions() {
+      // สร้างตัวเลือกเริ่มต้น (ว่าง)
+      const emptyOption = document.createElement('option');
+      emptyOption.value = '';
+      emptyOption.textContent = ' ';
+
+      // อัพเดททุกช่องในตารางสูตร
+      for (let row = 1; row <= 3; row++) {
+        for (let col = 1; col <= 3; col++) {
+          const select = document.getElementById(`r${row}c${col}`);
+
+          // เก็บค่าที่เลือกไว้ก่อนล้าง
+          const selectedValue = select.value;
+
+          // ล้างตัวเลือกเดิม
+          select.innerHTML = '';
+          select.appendChild(emptyOption.cloneNode(true));
+
+          // เพิ่มตัวเลือกจากวัตถุดิบที่มี
+          for (const [key, value] of Object.entries(materialsList)) {
+            const option = document.createElement('option');
+            option.value = key;
+            option.textContent = `${key} (${truncateMaterialName(value)})`;
+            select.appendChild(option);
+          }
+
+          // คืนค่าที่เลือกไว้เดิม (ถ้ายังมีอยู่)
+          if (selectedValue && materialsList[selectedValue]) {
+            select.value = selectedValue;
+          }
+        }
+      }
+    }
+
+    function setupMaterialInputs() {
+      const keySelect = document.getElementById('materialKeyInput');
+      const valueSelect = document.getElementById('materialValueInput');
+
+      // ล้างตัวเลือกเดิม
+      keySelect.innerHTML = '<option value="">-- Select --</option>';
+      valueSelect.innerHTML = '<option value="">-- Select --</option>';
+
+      // เพิ่มตัวเลือก a-z และ A-Z
+      for (let i = 97; i <= 122; i++) { // a-z
+        const option = document.createElement('option');
+        option.value = String.fromCharCode(i);
+        option.textContent = String.fromCharCode(i);
+        keySelect.appendChild(option);
+      }
+      for (let i = 65; i <= 90; i++) { // A-Z
+        const option = document.createElement('option');
+        option.value = String.fromCharCode(i);
+        option.textContent = String.fromCharCode(i);
+        keySelect.appendChild(option);
+      }
+
+      // เพิ่มตัวเลือกวัตถุดิบจาก materialsData
+      materialsData.forEach(material => {
+        const option = document.createElement('option');
+        option.value = material;
+        option.textContent = material;
+        valueSelect.appendChild(option);
+      });
+    }
+
+    // เพิ่มวัตถุดิบ
+    function addMaterial() {
+      const keySelect = document.getElementById('materialKeyInput');
+      const valueSelect = document.getElementById('materialValueInput');
+      const key = keySelect.value;
+      const value = valueSelect.value;
+
+      if (!key || !value) {
+        //showToast('error', 'กรุณาเลือกทั้งตัวอักษรและวัตถุดิบ', 3000); 
+        showToast('error', 'Please select both letters and ingredients.', 3000);
+        return;
+      }
+
+      // ตรวจสอบว่าตัวอักษรนี้ถูกใช้ไปแล้วหรือไม่
+      if (materialsList[key]) {
+        //showToast('error', `ตัวอักษร ${key} ถูกใช้ไปแล้ว`, 3000);
+        showToast('error', `character ${key} Already used`, 3000);
+        return;
+      }
+
+      // ตรวจสอบว่าวัตถุดิบนี้ถูกใช้ไปแล้วหรือไม่
+      const existingKey = Object.keys(materialsList).find(k => materialsList[k] === value);
+      if (existingKey) {
+        //showToast('error', `วัตถุดิบ ${value} ถูกใช้โดยตัวอักษร ${existingKey} แล้ว`, 3000);
+        showToast('error', `raw material ${value} Used by letters ${existingKey} already`, 3000);
+        return;
+      }
+
+      materialsList[key] = value;
+      updateMaterialsDisplay();
+      updateMaterialsHiddenInput();
+      updateRecipeSlotOptions();
+      updateRecipePreview();
+
+      // ล้างการเลือกแต่ไม่ล้างตัวเลือก
+      keySelect.value = '';
+      valueSelect.value = '';
+    }
+
+    // อัพเดตการแสดงผล
+    function updateMaterialsDisplay() {
+      const container = document.getElementById('materialsList');
+
+      // ตรวจสอบว่าไม่มีวัตถุดิบ
+      if (!materialsList || Object.keys(materialsList).length === 0) {
+        //container.innerHTML = '<p style="color: #777; margin: 0;">ยังไม่มีวัตถุดิบ</p>';
+        container.innerHTML = '<p style="color: #777; margin: 0;">No raw materials yet (ยังไม่มีวัตถุดิบ)</p>';
+        return;
+      }
+
+      let html = '';
+      for (const [key, value] of Object.entries(materialsList)) {
+        html += `
+      <div class="material-item" style="display: flex; justify-content: space-between; margin-bottom: 5px; padding: 5px; background: #f5f5f5; border-radius: 3px;">
+        <span>${key} = ${value}</span>
+        <button onclick="removeMaterial('${key}')" class="small danger">Remove (ลบ)</button>
+      </div>
+    `;
+      }
+      container.innerHTML = html;
+    }
+
+    // ลบวัตถุดิบ
+    function updateMaterialsHiddenInput() {
+      const materialsStr = Object.entries(materialsList)
+        .map(([k, v]) => `${k}=${v}`)
+        .join(',');
+      document.getElementById('materials').value = materialsStr;
+    }
+
+    // อัพเดต Input ที่ซ่อนอยู่
+    function updateMaterialsHiddenInput() {
+      const materialsStr = Object.entries(materialsList)
+        .map(([k, v]) => `${k}=${v}`)
+        .join(',');
+      document.getElementById('materials').value = materialsStr;
+    }
+
+
+    // ล้างแบบฟอร์ม
+    function clearForm() {
+        // ล้างข้อมูลพื้นฐาน
+        document.getElementById("uniqueID").value = '';
+        document.getElementById("displayName").value = '';
+        document.getElementById("description").value = '';
+        document.getElementById("instantEat").value = 'false';
+        document.getElementById("foodMaterial").value = '';
+        document.getElementById("saturation").value = '';
+        document.getElementById("hunger").value = '';
+        document.getElementById("health").value = '';
+        document.getElementById("craftable").value = 'true';
+        document.getElementById("craft_amount").value = '1';
+
+        // ล้างข้อมูลวัตถุดิบ
+        materialsList = {};
+        document.getElementById("materials").value = '';
+        document.getElementById("materialKeyInput").value = '';
+        document.getElementById("materialValueInput").value = '';
+        document.getElementById("materialsList").innerHTML = '<p style="color: #777; margin: 0;">ยังไม่มีวัตถุดิบ</p>';
+
+        // ล้างตารางสูตรคราฟต์ (3x3)
+        for (let row = 1; row <= 3; row++) {
+          for (let col = 1; col <= 3; col++) {
+            const select = document.getElementById(`r${row}c${col}`);
+            select.value = ''; // ล้างค่าที่เลือก
+
+            // รีเซ็ตตัวเลือกให้เหลือเพียงช่องว่าง
+            select.innerHTML = '<option value=""></option>';
+          }
+        }
+
+        // ล้างตัวอย่างสูตรคราฟต์แบบ 2 คอลัมน์
+        const previewContainer = document.querySelector('.recipe-preview');
+        previewContainer.innerHTML = `
+        <div class="recipe-preview-columns">
+          <div class="recipe-preview-left">
+            <h3>Recipe Preview [ตัวอย่างสูตรคราฟต์]</h3>
+            <div class="recipe-grid-preview">
+              ${Array(9).fill('<div class="recipe-slot empty"></div>').join('')}
+            </div>
+            <p>Craft_amount [จำนวนที่ได้]: <span id="preview-amount">1</span></p>
+          </div>
+          
+        </div>
+      `;
+
+        // ล้างข้อมูลเฉพาะประเภท
+        document.getElementById("headTexture").value = '';
+        document.getElementById("outputFoodMaterial").value = '';
+        document.getElementById("potionColor").value = 'BLUE';
+
+        // ซ่อนฟิลด์เฉพาะ
+        document.getElementById("headTextureField").classList.add("hidden");
+        document.getElementById("outputMaterialField").classList.add("hidden");
+        document.getElementById("potionColorField").classList.add("hidden");
+
+        // ล้างเอฟเฟกต์
+        currentPotionEffects = [];
+        updatePotionEffectsList();
+
+        // ซ่อนคำเตือน
+        document.getElementById("uniqueIDWarning").style.display = "none";
+        document.getElementById("uniqueIDSuccess").style.display = "none";
+
+        // อัพเดทตัวเลือกวัตถุดิบใหม่
+        updateRecipeSlotOptions();
+      }
+
+    // อัพเดตตัวอย่างสูตรคราฟต์
+    // ในฟังก์ชัน updateRecipePreview()
+    function updateRecipePreview() {
+      // ส่วนเดิมที่คำนวณข้อมูลสูตรคราฟต์
+      const materialsInput = document.getElementById("materials").value;
+      const materialsObj = {};
+      const materialCounts = {};
+
+      if (materialsInput) {
+        materialsInput.split(',').forEach(pair => {
+          const [key, value] = pair.split('=');
+          if (key && value) {
+            materialsObj[key.trim()] = value.trim();
+            materialCounts[value.trim()] = 0;
+          }
+        });
+      }
+
+      // นับจำนวนวัตถุดิบที่ใช้จริง
+      for (let row = 1; row <= 3; row++) {
+        for (let col = 1; col <= 3; col++) {
+          const char = document.getElementById(`r${row}c${col}`).value;
+          if (char && materialsObj[char]) {
+            const material = materialsObj[char];
+            materialCounts[material] = (materialCounts[material] || 0) + 1;
+          }
+        }
+      }
+
+      // สร้าง HTML สำหรับตัวอย่างสูตรคราฟต์ (คอลัมน์ 1)
+      let previewHTML = `
+          <div class="recipe-preview-columns">
+            <div class="recipe-preview-left">
+              <h3>Recipe Preview [ตัวอย่างสูตรคราฟต์]</h3>
+              <div class="recipe-grid-preview">
+        `;
+
+      // สร้างกริดตัวอย่างสูตร
+      for (let row = 1; row <= 3; row++) {
+        for (let col = 1; col <= 3; col++) {
+          const char = document.getElementById(`r${row}c${col}`).value;
+          previewHTML += `
+              <div class="recipe-slot ${char ? '' : 'empty'}">
+                <div class="recipe-slot-content">
+                  ${char ? `
+                    <div class="recipe-slot-char">${char}</div>
+                    <div class="recipe-slot-material">${truncateMaterialName(materialsObj[char] || '')}</div>
+                  ` : ''}
+                </div>
+              </div>
+            `;
+        }
+      }
+
+      previewHTML += `
+              </div>
+              <p>Craft_amount [จำนวนที่ได้]: <span id="preview-amount">${document.getElementById("craft_amount").value || '1'}</span></p>
+            </div>
+            <div class="recipe-preview-right">
+              <h3>Summary of raw materials (สรุปวัตถุดิบ)</h3>
+        `;
+
+      // สร้าง HTML สำหรับสรุปวัตถุดิบ (คอลัมน์ 2)
+      const usedMaterials = Object.entries(materialCounts)
+        .filter(([_, count]) => count > 0)
+        .map(([material, count]) => `<li>${material} ×${count}</li>`)
+        .join('') || '<li style="color: #777;">ไม่มีวัตถุดิบ</li>';
+
+      previewHTML += `
+              <div class="materials-summary">
+                <h4>Raw materials used (วัตถุดิบที่ใช้):</h4>
+                <ul>${usedMaterials}</ul>
+              </div>
+        `;
+
+      // ตรวจสอบวัตถุดิบที่ไม่ได้ใช้
+      const unusedMaterials = findUnusedMaterials();
+      if (unusedMaterials.length > 0) {
+        previewHTML += `
+              <div class="warning-message">
+                <p style="color: var(--danger-color);">
+                  <i class="fas fa-exclamation-triangle"></i>The following ingredients are not used in the recipe.<br> 
+                  </i>(วัตถุดิบที่ไม่ได้ใช้):<br>
+                  ${unusedMaterials.map(m => `${m.key}=${m.value}`).join(', ')}
+                </p>
+              </div>
+          `;
+      }
+
+      previewHTML += `
+            </div>
+          </div>
+        `;
+
+      // อัพเดท HTML ทั้งหมด
+      document.querySelector('.recipe-preview').innerHTML = previewHTML;
+    }
+
+    function findUnusedMaterials() {
+      const usedKeys = new Set();
+      const unused = [];
+
+      // ตรวจสอบว่าตัวอักษรไหนถูกใช้ในสูตร
+      for (let row = 1; row <= 3; row++) {
+        for (let col = 1; col <= 3; col++) {
+          const char = document.getElementById(`r${row}c${col}`).value;
+          if (char && materialsList[char]) {
+            usedKeys.add(char);
+          }
+        }
+      }
+
+      // หาวัตถุดิบที่ไม่ได้ใช้
+      for (const [key, value] of Object.entries(materialsList)) {
+        if (!usedKeys.has(key)) {
+          unused.push({ key, value });
+        }
+      }
+
+      return unused;
+    }
+    // ฟังก์ชันตัดชื่อวัสดุหากยาวเกิน
+    function truncateMaterialName(name) {
+      if (name.length > 15) {
+        return name.substring(0, 12) + '...';
+      }
+      return name;
+    }
+
+    // เริ่มต้นทำงานเมื่อโหลดหน้าเว็บ
+    window.onload = function () {
+      loadMaterials();
+      setupMaterialInputs();
+      updateRecipeSlotOptions();
+
+      // เพิ่ม event listeners สำหรับอัพเดตตัวอย่างสูตรคราฟต์
+      const recipeSelects = document.querySelectorAll('.recipe-grid select');
+      recipeSelects.forEach(select => {
+        select.addEventListener('change', updateRecipePreview);
+      });
+
+      document.getElementById('materials').addEventListener('input', updateRecipePreview);
+      document.getElementById('craft_amount').addEventListener('input', updateRecipePreview);
+
+      // ปิด modal เมื่อคลิกนอกพื้นที่
+      window.addEventListener('click', function (event) {
+        if (event.target === document.getElementById('effectPopup')) {
+          closeEffectPopup();
+        }
+        if (event.target === document.getElementById('foodDetailModal')) {
+          closeFoodDetail();
+        }
+      });
+
+      // Back to Top Button
+      const backToTopButton = document.querySelector('.back-to-top');
+
+      window.addEventListener('scroll', () => {
+        if (window.pageYOffset > 300) {
+          backToTopButton.classList.add('show');
+        } else {
+          backToTopButton.classList.remove('show');
+        }
+      });
+
+      backToTopButton.addEventListener('click', () => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+    };
+
+
+    // จำกัด materialKeyInput ให้รับได้เฉพาะอักษร 1 ตัว
+    document.getElementById('materialKeyInput').addEventListener('input', function () {
+      const filteredValue = this.value.replace(/[^a-zA-Z]/g, '').slice(0, 1);
+      if (this.value !== filteredValue) {
+        this.value = filteredValue;
+      }
+    });
+
+  </script>
