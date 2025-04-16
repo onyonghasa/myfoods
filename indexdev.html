@@ -732,6 +732,7 @@
               <option value="">-- Select --</option>
               <option value="WHITE">WHITE [ขาว]</option>
               <option value="RED">RED [แดง]</option>
+              <option value="PINK">PINK [ชมพู]</option>
               <option value="BLUE" selected>BLUE [น้ำเงิน]</option>
               <option value="GREEN">GREEN [เขียว]</option>
               <option value="YELLOW">YELLOW [เหลือง]</option>
@@ -742,7 +743,7 @@
 
           <div id="customColorSelection" class="hidden">
             <input type="color" id="customPotionColor" value="#FFFFFF">
-            <input type="text" id="customPotionColorText" placeholder="หรือใส่รหัสสี HTML/RGB">
+            <input type="text" id="customPotionColorText" placeholder="หรือใส่รหัสสี HTML/RGB | HEX #RRGGBB // รูปแบบ RGB R,G,B">
           </div>
         </div>
 
@@ -934,6 +935,12 @@
           loadInitialFoodData();
           //showToast('info', 'ใช้ข้อมูลตัวอย่างเริ่มต้น', 3000);
           showToast('info', 'Use default sample data', 3000);
+        }
+
+        // 4.4 Set default POTION as output material if food material is POTION
+        if (document.getElementById("foodMaterial").value === "POTION") {
+          document.getElementById("outputFoodMaterial").value = "POTION";
+          document.getElementById("potionColorField").classList.remove("hidden");
         }
 
         // 5. อัพเดท dropdown
@@ -1276,16 +1283,31 @@
 
         // Clear special fields when material changes
         document.getElementById("headTexture").value = '';
-        document.getElementById("outputFoodMaterial").value = '';
-        document.getElementById("potionColor").value = 'WHITE';
+        document.getElementById("potionColor").value = 'BLUE';
 
         // Show relevant fields based on material type
         if (material === "PLAYER_HEAD") {
           document.getElementById("headTextureField").classList.remove("hidden");
-        }
-        else if (material === "POTION") {
+        } else if (material === "POTION") {
           document.getElementById("outputMaterialField").classList.remove("hidden");
-          // Don't show potionColorField yet - wait for output material selection
+          // Set POTION as default output material
+          document.getElementById("outputFoodMaterial").value = "POTION";
+          // Show potion color field since output is POTION by default
+          document.getElementById("potionColorField").classList.remove("hidden");
+        }
+      }
+
+      function handleOutputMaterialChange() {
+        const foodMaterial = document.getElementById("foodMaterial").value;
+        const outputMaterial = document.getElementById("outputFoodMaterial").value;
+
+        // Only show potion color if output is POTION
+        if (foodMaterial === "POTION" && outputMaterial === "POTION") {
+          document.getElementById("potionColorField").classList.remove("hidden");
+          // Set default value to BLUE
+          document.getElementById("potionColor").value = 'BLUE';
+        } else {
+          document.getElementById("potionColorField").classList.add("hidden");
         }
       }
 
@@ -1494,121 +1516,124 @@
 
     // บันทึกข้อมูล
     function saveData() {
-      const uniqueID = document.getElementById("uniqueID").value;
-      const warning = document.getElementById("uniqueIDWarning");
-      const success = document.getElementById("uniqueIDSuccess");
+        const uniqueID = document.getElementById("uniqueID").value;
+        const warning = document.getElementById("uniqueIDWarning");
+        const success = document.getElementById("uniqueIDSuccess");
 
-      if (uniqueID === '') {
-        warning.style.display = "block";
-        warning.textContent = "กรุณากรอก uniqueID";
-        success.style.display = "none";
-        return;
-      }
+        if (uniqueID === '') {
+          warning.style.display = "block";
+          warning.textContent = "กรุณากรอก uniqueID";
+          success.style.display = "none";
+          return;
+        }
 
-      if (warning.style.display === "block") {
-        return;
-      }
+        if (warning.style.display === "block") {
+          return;
+        }
 
+        // Create materials object
+        const materialsObj = {};
+        for (const [key, value] of Object.entries(materialsList)) {
+          materialsObj[key] = value;
+        }
 
-      // สร้างวัตถุดิบจาก input
-      const materialsInput = document.getElementById("materials").value;
-      const materialsObj = { ...materialsList };
+        // Create shape array
+        const shape = [
+          (document.getElementById("r1c1").value || ' ') +
+          (document.getElementById("r1c2").value || ' ') +
+          (document.getElementById("r1c3").value || ' '),
+          (document.getElementById("r2c1").value || ' ') +
+          (document.getElementById("r2c2").value || ' ') +
+          (document.getElementById("r2c3").value || ' '),
+          (document.getElementById("r3c1").value || ' ') +
+          (document.getElementById("r3c2").value || ' ') +
+          (document.getElementById("r3c3").value || ' ')
+        ];
 
-      if (materialsInput) {
-        materialsInput.split(',').forEach(pair => {
-          const [key, value] = pair.split('=');
-          if (key && value) {
-            materialsObj[key.trim()] = value.trim();
+        // Create potion effects object
+        const potionEffectsObj = {};
+        currentPotionEffects.forEach(effect => {
+          potionEffectsObj[effect.effect] = {
+            duration: parseInt(effect.duration),
+            amplifier: parseInt(effect.amplifier)
+          };
+        });
+
+        // Handle potion color
+        let potionColorValue = null;
+        const foodMaterial = document.getElementById("foodMaterial").value;
+        const outputMaterial = document.getElementById("outputFoodMaterial").value;
+
+        if (foodMaterial === "POTION" && outputMaterial === "POTION") {
+          const colorType = document.getElementById("potionColorType").value;
+          potionColorValue = colorType === "basic"
+            ? document.getElementById("potionColor").value
+            : document.getElementById("customPotionColor").value ||
+            document.getElementById("customPotionColorText").value;
+        }
+
+        // Create the new entry with exact field order
+        const entry = {
+          uniqueID: uniqueID,
+          displayName: document.getElementById("displayName").value,
+          description: document.getElementById("description").value.split('\n').filter(line => line.trim() !== ''),
+          instantEat: document.getElementById("instantEat").value === 'true',
+          foodMaterial: foodMaterial,
+          // Conditional fields
+          ...(foodMaterial === "PLAYER_HEAD" && {
+            headTexture: document.getElementById("headTexture").value || ''
+          }),
+          ...(foodMaterial === "POTION" && outputMaterial && {
+            outputFoodMaterial: outputMaterial
+          }),
+          ...(foodMaterial === "POTION" && outputMaterial === "POTION" && potionColorValue && {
+            potionColor: potionColorValue
+          }),
+          potionEffects: Object.keys(potionEffectsObj).length > 0 ? potionEffectsObj : undefined,
+          saturation: parseFloat(document.getElementById("saturation").value) || 0,
+          hunger: parseInt(document.getElementById("hunger").value) || 0,
+          health: parseFloat(document.getElementById("health").value) || 0,
+          craftable: document.getElementById("craftable").value === 'true',
+          // Recipe only if craftable
+          ...(document.getElementById("craftable").value === 'true' && {
+            recipe: {
+              shape: shape,
+              materials: materialsObj,
+              craft_amount: parseInt(document.getElementById("craft_amount").value) || 1
+            }
+          })
+        };
+
+        // Clean up undefined fields
+        Object.keys(entry).forEach(key => {
+          if (entry[key] === undefined) {
+            delete entry[key];
           }
         });
-      }
 
-      // สร้าง shape จาก input
-      const shape = [
-        (document.getElementById("r1c1").value || ' ') +
-        (document.getElementById("r1c2").value || ' ') +
-        (document.getElementById("r1c3").value || ' '),
-        (document.getElementById("r2c1").value || ' ') +
-        (document.getElementById("r2c2").value || ' ') +
-        (document.getElementById("r2c3").value || ' '),
-        (document.getElementById("r3c1").value || ' ') +
-        (document.getElementById("r3c2").value || ' ') +
-        (document.getElementById("r3c3").value || ' ')
-      ];
+        // Check if uniqueID already exists
+        const existingIndex = foodData.findIndex(item => item.uniqueID === uniqueID);
 
-      // สร้าง potion effects object
-      const potionEffectsObj = {};
-      currentPotionEffects.forEach(effect => {
-        potionEffectsObj[effect.effect] = {
-          duration: parseInt(effect.duration),
-          amplifier: parseInt(effect.amplifier)
-        };
-      });
-
-      // สร้าง entry ใหม่
-      let potionColorValue;
-      if (document.getElementById("foodMaterial").value === "POTION" &&
-        document.getElementById("outputFoodMaterial").value === "POTION") {
-        const colorType = document.getElementById("potionColorType").value;
-        if (colorType === "basic") {
-          potionColorValue = document.getElementById("potionColor").value || null;
+        if (existingIndex >= 0) {
+          // Update existing entry
+          foodData[existingIndex] = entry;
+          showToast('success', `Updated "${entry.displayName}" successfully!`, 3000);
         } else {
-          potionColorValue = document.getElementById("customPotionColor").value ||
-            document.getElementById("customPotionColorText").value || null;
+          // Add new entry
+          foodData.push(entry);
+          showToast('success', `Added "${entry.displayName}" successfully!`, 3000);
         }
-      }
-      const entry = {
-        uniqueID,
-        displayName: document.getElementById("displayName").value,
-        description: document.getElementById("description").value.split('\n'),
-        instantEat: document.getElementById("instantEat").value === 'true',
-        foodMaterial: document.getElementById("foodMaterial").value,
-        headTexture: document.getElementById("headTexture").value,
-        potionColor: potionColorValue,
-        saturation: parseFloat(document.getElementById("saturation").value) || 0,
-        hunger: parseInt(document.getElementById("hunger").value) || 0,
-        health: parseFloat(document.getElementById("health").value) || 0,
-        craftable: document.getElementById("craftable").value === 'true',
-        potionEffects: potionEffectsObj
-      };
 
-      // เพิ่ม outputFoodMaterial ถ้ามีค่า (ไม่รวม PLAYER_HEAD)
-      const outputMaterial = document.getElementById("outputFoodMaterial").value;
-      if (outputMaterial && entry.foodMaterial !== "PLAYER_HEAD") {
-        entry.outputFoodMaterial = outputMaterial;
+        // Sort foodData to maintain consistent order
+        foodData.sort((a, b) => a.uniqueID.localeCompare(b.uniqueID));
+
+        clearForm();
+        displayFoodList();
+
+        // Save to localStorage
+        localStorage.setItem('foodDataCache', JSON.stringify(foodData, null, 2));
       }
 
-      // เพิ่ม recipe ถ้า craftable
-      if (entry.craftable === true) { // เปลี่ยนจาก 'true' เป็น true
-        entry.recipe = {
-          shape: shape,
-          materials: materialsObj, // ใช้ materialsObj ที่สร้างจาก materialsList
-          craft_amount: parseInt(document.getElementById("craft_amount").value) || 1
-        };
-      } else if (entry.craftable === false) { // เปลี่ยนจาก 'false' เป็น false
-        entry.recipe = {
-          shape: shape,
-          materials: materialsObj, // ใช้ materialsObj ที่สร้างจาก materialsList
-          craft_amount: parseInt(document.getElementById("craft_amount").value) || 1,
-          disabled: true
-        };
-      }
-
-      // ตรวจสอบว่ามี uniqueID นี้อยู่แล้วหรือไม่
-      const existingIndex = foodData.findIndex(item => item.uniqueID === uniqueID);
-
-      if (existingIndex >= 0) {
-        // อัพเดตข้อมูลที่มีอยู่
-        foodData[existingIndex] = entry;
-        showToast('success', `อัพเดต "${entry.displayName}" สำเร็จ!`, 3000);
-      } else {
-        // เพิ่มข้อมูลใหม่
-        foodData.push(entry);
-        showToast('success', `เพิ่ม "${entry.displayName}" สำเร็จ!`, 3000);
-      }
-      clearForm();
-      displayFoodList();
-    }
     // แสดงข้อความแจ้งเตือน
     function showAlert(type, message) {
       const alertDiv = document.createElement('div');
@@ -1812,85 +1837,85 @@
 
     // แก้ไขอาหาร
     function editFood(index) {
-      const food = foodData[index];
+        const food = foodData[index];
 
-      // ล้างฟอร์มทั้งหมดก่อนโหลดข้อมูลใหม่
-      clearForm();
+        // ล้างฟอร์มทั้งหมดก่อนโหลดข้อมูลใหม่
+        clearForm();
 
-      // กรอกข้อมูลพื้นฐาน
-      document.getElementById("uniqueID").value = food.uniqueID;
-      document.getElementById("displayName").value = food.displayName;
-      document.getElementById("description").value = food.description.join('\n');
-      document.getElementById("instantEat").value = food.instantEat;
-      document.getElementById("foodMaterial").value = food.foodMaterial;
-      document.getElementById("saturation").value = food.saturation || 0;
-      document.getElementById("hunger").value = food.hunger || 0;
-      document.getElementById("health").value = food.health || 0;
-      document.getElementById("craftable").value = food.craftable;
+        // กรอกข้อมูลพื้นฐาน
+        document.getElementById("uniqueID").value = food.uniqueID;
+        document.getElementById("displayName").value = food.displayName;
+        document.getElementById("description").value = food.description.join('\n');
+        document.getElementById("instantEat").value = food.instantEat;
+        document.getElementById("foodMaterial").value = food.foodMaterial;
+        document.getElementById("saturation").value = food.saturation || 0;
+        document.getElementById("hunger").value = food.hunger || 0;
+        document.getElementById("health").value = food.health || 0;
+        document.getElementById("craftable").value = food.craftable;
 
-      // กรอกข้อมูลสูตรคราฟต์ (แสดงเสมอถ้ามีข้อมูล)
-      if (food.recipe) {
-        materialsList = {};
-        for (const [key, value] of Object.entries(food.recipe.materials)) {
-          materialsList[key] = value;
-        }
-        updateMaterialsDisplay();
-        updateMaterialsHiddenInput();
+        // กรอกข้อมูลสูตรคราฟต์ (แสดงเสมอถ้ามีข้อมูล)
+        if (food.recipe) {
+          materialsList = {};
+          for (const [key, value] of Object.entries(food.recipe.materials)) {
+            materialsList[key] = value;
+          }
+          updateMaterialsDisplay();
+          updateMaterialsHiddenInput();
 
-        // อัพเดทตัวเลือกในตารางสูตร
-        updateRecipeSlotOptions();
+          // อัพเดทตัวเลือกในตารางสูตร
+          updateRecipeSlotOptions();
 
-        // กรอกจำนวนที่ได้
-        document.getElementById("craft_amount").value = food.recipe.craft_amount || 1;
+          // กรอกจำนวนที่ได้
+          document.getElementById("craft_amount").value = food.recipe.craft_amount || 1;
 
-        // กรอกช่องสูตรคราฟต์ 3x3
-        if (food.recipe.shape && food.recipe.shape.length === 3) {
-          for (let row = 0; row < 3; row++) {
-            const rowPattern = food.recipe.shape[row];
-            for (let col = 0; col < 3; col++) {
-              const char = rowPattern && rowPattern[col] ? rowPattern[col] : '';
-              // ตั้งค่าตัวเลือกใน select
-              const select = document.getElementById(`r${row + 1}c${col + 1}`);
-              select.value = char.trim();
+          // กรอกช่องสูตรคราฟต์ 3x3
+          if (food.recipe.shape && food.recipe.shape.length === 3) {
+            for (let row = 0; row < 3; row++) {
+              const rowPattern = food.recipe.shape[row];
+              for (let col = 0; col < 3; col++) {
+                const char = rowPattern && rowPattern[col] ? rowPattern[col] : '';
+                // ตั้งค่าตัวเลือกใน select
+                const select = document.getElementById(`r${row + 1}c${col + 1}`);
+                select.value = char.trim();
+              }
             }
           }
         }
-      }
 
-      // กรอกข้อมูลเฉพาะประเภท
-      if (food.foodMaterial === "PLAYER_HEAD") {
-        document.getElementById("headTexture").value = food.headTexture || '';
-        document.getElementById("headTextureField").classList.remove("hidden");
-      }
-      else if (food.foodMaterial === "POTION") {
-        document.getElementById("outputFoodMaterial").value = food.outputFoodMaterial || "";
-        document.getElementById("outputMaterialField").classList.remove("hidden");
-         // Only show potion color if output is also POTION
-        if (food.outputFoodMaterial === "POTION") {
-          document.getElementById("potionColorField").classList.remove("hidden");
-          document.getElementById("potionColor").value = food.potionColor || "BLUE";
+        // กรอกข้อมูลเฉพาะประเภท
+        if (food.foodMaterial === "PLAYER_HEAD") {
+          document.getElementById("headTexture").value = food.headTexture || '';
+          document.getElementById("headTextureField").classList.remove("hidden");
         }
-      }
-
-      // กรอกเอฟเฟกต์
-      currentPotionEffects = [];
-      if (food.potionEffects) {
-        for (const [effect, details] of Object.entries(food.potionEffects)) {
-          currentPotionEffects.push({
-            effect,
-            duration: details.duration,
-            amplifier: details.amplifier
-          });
+        else if (food.foodMaterial === "POTION") {
+          document.getElementById("outputFoodMaterial").value = food.outputFoodMaterial || "POTION";
+          document.getElementById("outputMaterialField").classList.remove("hidden");
+          // Only show potion color if output is also POTION
+          if ((food.outputFoodMaterial || "POTION") === "POTION") {
+            document.getElementById("potionColorField").classList.remove("hidden");
+            document.getElementById("potionColor").value = food.potionColor || "BLUE";
+          }
         }
+
+        // กรอกเอฟเฟกต์
+        currentPotionEffects = [];
+        if (food.potionEffects) {
+          for (const [effect, details] of Object.entries(food.potionEffects)) {
+            currentPotionEffects.push({
+              effect,
+              duration: details.duration,
+              amplifier: details.amplifier
+            });
+          }
+        }
+
+        updatePotionEffectsList();
+        updateRecipePreview();
+
+        // เปิดแท็บแก้ไขและเลื่อนไปด้านบน
+        openTab('add-tab');
+        window.scrollTo(0, 0);
       }
-
-      updatePotionEffectsList();
-      updateRecipePreview();
-
-      // เปิดแท็บแก้ไขและเลื่อนไปด้านบน
-      openTab('add-tab');
-      window.scrollTo(0, 0);
-    }
 
     // ลบอาหาร
     async function deleteFood(index) {
@@ -2315,14 +2340,17 @@
       `;
 
         // ล้างข้อมูลเฉพาะประเภท
-        document.getElementById("headTexture").value = '';
-        document.getElementById("outputFoodMaterial").value = '';
-        document.getElementById("potionColor").value = 'BLUE';
+      document.getElementById("headTexture").value = '';
+      document.getElementById("outputFoodMaterial").value = '';
+      document.getElementById("potionColor").value = 'BLUE';
+      document.getElementById("potionColorType").value = 'basic';
+      document.getElementById("customPotionColor").value = '#FFFFFF';
+      document.getElementById("customPotionColorText").value = '';
 
         // ซ่อนฟิลด์เฉพาะ
-        document.getElementById("headTextureField").classList.add("hidden");
-        document.getElementById("outputMaterialField").classList.add("hidden");
-        document.getElementById("potionColorField").classList.add("hidden");
+      document.getElementById("headTextureField").classList.add("hidden");
+      document.getElementById("outputMaterialField").classList.add("hidden");
+      document.getElementById("potionColorField").classList.add("hidden");
 
         // ล้างเอฟเฟกต์
         currentPotionEffects = [];
